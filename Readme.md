@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Даниил Васильчук](https://up.htmlacademy.ru/javascript/20/user/1139215).
-* Наставник: `Неизвестно`.
+* Наставник: [Юра Кармаков](https://htmlacademy.ru/profile/id1472757).
 
 ---
 
