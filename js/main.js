@@ -1,25 +1,55 @@
 'use strict';
 
 /* <=== CONSTANTS & VARIABLES===> */
+
+var map = document.querySelector('.map');
+var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var fragment = document.createDocumentFragment();
+var mapPins = document.querySelector('.map__pins');
+
 var TITLES = [
-  'Тихая квартирка недалеко от метро',
-  'Стандартная квартира в центре',
-  'Чёткая хата',
-  'Наркоманский притон',
-  'Милейший чердачок',
-  'Императорский дворец в центре Токио',
-  'Милое гнездышко для фанатов аниме',
-  'Маленькая квартирка рядом с парком'
+  {
+    title: 'Тихая квартирка недалеко от метро',
+    description: 'Квартира на первом этаже. Соседи тихие. Для всех, кто терпеть не может шума и суеты.'
+  },
+  {
+    title: 'Стандартная квартира в центре',
+    description: 'Тут красиво, светло и уютно. Есть где разместиться компании из 5 человек. Кофе и печеньки бесплатно.'
+  },
+  {
+    title: 'Чёткая хата',
+    description: 'У нас тут все ништяк. Ларек за углом. Шава 24 часа. Приезжайте! Интернетов нет!'
+  },
+  {
+    title: 'Наркоманский притон',
+    description: 'У нас есть всё! Шприцы, интернет, кофе. Для всех кто знает толк в отдыхе. Полицию просим не беспокоить.'
+  },
+  {
+    title: 'Милейший чердачок',
+    description: 'Маленькая квартирка на чердаке. Для самых не требовательных.'
+  },
+  {
+    title: 'Императорский дворец в центре Токио',
+    description: 'Замечательный дворец в старинном центре города. Только для тех кто может себе позволить дворец. Лакеев и прочих жокеев просим не беспокоить.'
+  },
+  {
+    title: 'Милое гнездышко для фанатов аниме',
+    description: 'Азиатов просьба не беспокоить.'
+  },
+  {
+    title: 'Маленькая квартирка рядом с парком',
+    description: 'Маленькая чистая квартира на краю парка. Без интернета, регистрации и СМС.'
+  }
 ];
 
 var COORDS_X = {
-  MIN: 50,
-  MAX: 1100
+  MIN: 0,
+  MAX: map.offsetWidth
 };
 
 var COORDS_Y = {
-  MIN: 65,
-  MAX: 650
+  MIN: 130,
+  MAX: 630
 };
 
 var PRICE = {
@@ -39,10 +69,12 @@ var ROOMS = {
   MAX: 5
 };
 
-var GUESTS_COUNT = {
-  MIN: 1,
-  MAX: 12
-};
+var ROOMS = [
+  1,
+  2,
+  3,
+  100
+];
 
 var TIMES = [
   '12:00',
@@ -72,11 +104,6 @@ var PIN_SIZE = {
   y: 20
 };
 
-var map = document.querySelector('.map');
-var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var fragment = document.createDocumentFragment();
-var mapPins = document.querySelector('.map__pins');
-
 /* <=== /CONSTANTS & VARIABLES ===> */
 
 
@@ -94,10 +121,9 @@ var getRandomArrElement = function (arr) {
 };
 
 // формирует строку вида img/avatars/user08.png
-var getUserAvatar = function () {
+var getUserAvatar = function (number) {
   var path = 'img/avatars/user';
   var format = '.png';
-  var number = getRandomNumber(1, 8);
   return path + (number < 9 ? '0' : '') + number + format;
 };
 
@@ -117,26 +143,44 @@ var generateRandomArray = function (arr) {
   return randomArr;
 };
 
+// получаем количество гостей в зависимости от количества комнат
+var getNumberRooms = function (rooms) {
+  var numberOfRoom = 'не для гостей';
+
+  if (rooms !== 100) {
+    var guestCount = getRandomNumber(1, rooms);
+    numberOfRoom = guestCount > 1 ?
+      'для ' + guestCount + ' гостей' :
+      'для ' + guestCount + ' гостя';
+  }
+  return numberOfRoom;
+};
+
 // создает одно объявление
-var createAd = function () {
+var createAd = function (i) {
   var x = getRandomNumber(COORDS_X.MIN, COORDS_X.MAX);
   var y = getRandomNumber(COORDS_Y.MIN, COORDS_Y.MAX);
 
+  var time = getRandomArrElement(TIMES);
+  var descriptions = getRandomArrElement(TITLES);
+  var rooms = getRandomArrElement(ROOMS);
+  var guests = getNumberRooms(rooms);
+
   return {
     author: {
-      avatar: getUserAvatar()
+      avatar: getUserAvatar(i + 1)
     },
     offer: {
-      title: getRandomArrElement(TITLES),
+      title: descriptions.title,
       address: +x + ', ' + y,
       price: getRandomNumber(PRICE.MIN, PRICE.MAX),
       type: getRandomArrElement(TYPES),
-      rooms: getRandomNumber(ROOMS.MIN, ROOMS.MAX),
-      guests: getRandomNumber(GUESTS_COUNT.MIN, GUESTS_COUNT.MAX),
-      checkin: getRandomArrElement(TIMES),
-      checkout: getRandomArrElement(TIMES),
+      rooms: rooms,
+      guests: guests,
+      checkin: 'после ' + time,
+      checkout: 'до ' + time,
       features: generateRandomArray(FEATURES),
-      description: '',
+      description: descriptions.description,
       photos: [],
     },
     location: {
@@ -145,17 +189,6 @@ var createAd = function () {
     }
   };
 };
-
-// создает массив объявлений
-var createAds = function () {
-  var adArray = [];
-  for (var i = 0; i < AD_COUNT; i++) {
-    var ad = createAd();
-    adArray.push(ad);
-  }
-  return adArray;
-};
-
 
 var renderPin = function (ad) {
   var pinElement = mapPinTemplate.cloneNode(true);
@@ -170,13 +203,14 @@ var renderPin = function (ad) {
 
 
 /* <=== FUNCTION CALLS ===> */
-var ads = createAds();
 
-for (var i = 0; i < ads.length; i++) {
-  fragment.appendChild(renderPin(ads[i]));
+// рендерим все пины
+for (var i = 0; i < AD_COUNT; i++) {
+  var ad = createAd(i);
+  console.log(ad);
+  fragment.appendChild(renderPin(ad));
+  mapPins.appendChild(fragment);
 }
-
-mapPins.appendChild(fragment);
 
 map.classList.remove('map--faded');
 /* <=== /FUNCTION CALLS ===> */
