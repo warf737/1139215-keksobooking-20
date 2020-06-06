@@ -42,6 +42,21 @@ var TITLES = [
   }
 ];
 
+var PHOTOS = [
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/5a29d708-9396-40bf-b002-92c5fdeb5c90.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/23e332cb-1379-4582-85ac-901d6c441635.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/1c859bbf-61d6-4295-b463-c1d0cbf62592.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/f5e66549-1940-4659-b27a-652f5c809231.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/mec/hotels/11000000/10360000/10357700/10357605/10357605_30_b.jpg',
+  'https://cdn.ostrovok.ru/t/x500/laterooms/hotelphotos/laterooms/274510/gallery/economy-apartment-shinjuku-tokyo-tokyo_040220130219545024.jpg',
+  'https://cdn.ostrovok.ru/t/x500/laterooms/hotelphotos/laterooms/274510/gallery/economy-apartment-shinjuku-tokyo-tokyo_040220130215449816.jpg',
+  'https://cdn.ostrovok.ru/t/x500/laterooms/hotelphotos/laterooms/274510/gallery/economy-apartment-shinjuku-tokyo-tokyo_040220130206399539.jpg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/69d53ff8-cd47-479d-8c9a-5170352aa169.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/19614107-a1da-4a0b-8a93-95107704a598.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/a97c72b9-e311-4a5a-863d-ea1e31ae9924.jpeg',
+  'https://cdn.ostrovok.ru/t/x500/carsolize/images/hotels/d2a52c68-e877-4902-be6d-c7f3cb198437.jpeg'
+];
+
 var COORDS_X = {
   MIN: 0,
   MAX: map.offsetWidth
@@ -52,24 +67,26 @@ var COORDS_Y = {
   MAX: 630
 };
 
-var PRICE = {
-  MIN: 100,
-  MAX: 2000
-};
-
-var TYPES = [
-  'Дворец',
-  'Квартира',
-  'Дом',
-  'Бунгало'
+var ROOM_TYPES = [
+  {
+    type: 'Дворец',
+    minPrice: 10000
+  },
+  {
+    type: 'Квартира',
+    minPrice: 1000
+  },
+  {
+    type: 'Дом',
+    minPrice: 5000
+  },
+  {
+    type: 'Бунгало',
+    minPrice: 0
+  }
 ];
 
-var ROOMS = {
-  MIN: 1,
-  MAX: 5
-};
-
-var ROOMS = [
+var ROOMS_COUNT = [
   1,
   2,
   3,
@@ -90,12 +107,6 @@ var FEATURES = [
   'elevator',
   'conditioner'
 ];
-
-// var PHOTOS = [
-//   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-//   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-//   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-// ];
 
 var AD_COUNT = 8;
 
@@ -165,10 +176,11 @@ var createAd = function (i) {
 
   var time = getRandomArrElement(TIMES);
   var descriptions = getRandomArrElement(TITLES);
-  var rooms = getRandomArrElement(ROOMS);
-  var guests = getNumberRooms(rooms);
+  var roomsNumber = getRandomArrElement(ROOMS_COUNT);
+  var guestsNumber = getNumberRooms(roomsNumber);
   var features = generateRandomArray(FEATURES);
-
+  var roomType = getRandomArrElement(ROOM_TYPES);
+  var photos = generateRandomArray(PHOTOS);
   return {
     author: {
       avatar: getUserAvatar(i + 1)
@@ -176,15 +188,15 @@ var createAd = function (i) {
     offer: {
       title: descriptions.title,
       address: +x + ', ' + y,
-      price: getRandomNumber(PRICE.MIN, PRICE.MAX),
-      type: getRandomArrElement(TYPES),
-      rooms: rooms,
-      guests: guests,
+      price: roomType.price,
+      type: roomType.type,
+      rooms: roomsNumber,
+      guests: guestsNumber,
       checkin: 'после ' + time,
       checkout: 'до ' + time,
       features: features,
       description: descriptions.description,
-      photos: [],
+      photos: photos,
     },
     location: {
       x: x,
@@ -210,7 +222,6 @@ var renderPin = function (ad) {
 // рендерим все пины
 for (var i = 0; i < AD_COUNT; i++) {
   var ad = createAd(i);
-  console.log(ad);
   fragment.appendChild(renderPin(ad));
   mapPins.appendChild(fragment);
 }
