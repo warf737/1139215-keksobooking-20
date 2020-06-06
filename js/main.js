@@ -127,20 +127,22 @@ var getUserAvatar = function (number) {
   return path + (number < 9 ? '0' : '') + number + format;
 };
 
+// перемешивает значения массива в случайном порядке
+var shuffleArr = function (arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+};
+
 // преобразует входной массив в массив случайной длины и случайными элементами
 var generateRandomArray = function (arr) {
-  var randomArr = [];
-  var randomArrLength = getRandomNumber(1, arr.length);
-  var copiedArray = arr.slice();
-
-  for (var i = 0; i < randomArrLength; i++) {
-    var randomArrElement = getRandomArrElement(copiedArray);
-    copiedArray = copiedArray.filter(function (item) {
-      return item !== randomArrElement;
-    });
-    randomArr.push(randomArrElement);
-  }
-  return randomArr;
+  var copiedArr = arr;
+  var randomArrLength = getRandomNumber(0, copiedArr.length);
+  copiedArr = shuffleArr(copiedArr);
+  var features = shuffleArr(copiedArr).slice(0, randomArrLength);
+  return features;
 };
 
 // получаем количество гостей в зависимости от количества комнат
@@ -165,6 +167,7 @@ var createAd = function (i) {
   var descriptions = getRandomArrElement(TITLES);
   var rooms = getRandomArrElement(ROOMS);
   var guests = getNumberRooms(rooms);
+  var features = generateRandomArray(FEATURES);
 
   return {
     author: {
@@ -179,7 +182,7 @@ var createAd = function (i) {
       guests: guests,
       checkin: 'после ' + time,
       checkout: 'до ' + time,
-      features: generateRandomArray(FEATURES),
+      features: features,
       description: descriptions.description,
       photos: [],
     },
