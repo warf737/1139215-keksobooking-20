@@ -133,9 +133,9 @@ var getRandomArrElement = function (arr) {
 
 // формирует строку вида img/avatars/user08.png
 var getUserAvatar = function (number) {
-  var path = 'img/avatars/user';
+  var path = 'img/avatars/user0';
   var format = '.png';
-  return path + (number < 9 ? '0' : '') + number + format;
+  return path + number + format;
 };
 
 // перемешивает значения массива в случайном порядке
@@ -187,7 +187,7 @@ var createAd = function (i) {
     },
     offer: {
       title: descriptions.title,
-      address: +x + ', ' + y,
+      address: x + ', ' + y,
       price: roomType.price,
       type: roomType.type,
       rooms: roomsNumber,
