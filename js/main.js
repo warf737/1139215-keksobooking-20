@@ -134,9 +134,9 @@ var getRandomArrElement = function (arr) {
 
 // формирует строку вида img/avatars/user08.png
 var getUserAvatar = function (number) {
-  var path = 'img/avatars/user';
+  var path = 'img/avatars/user0';
   var format = '.png';
-  return path + (number < 9 ? '0' : '') + number + format;
+  return path + number + format;
 };
 
 // перемешивает значения массива в случайном порядке
@@ -175,7 +175,8 @@ var createAd = function (i) {
   var x = getRandomNumber(COORDS_X.MIN, COORDS_X.MAX);
   var y = getRandomNumber(COORDS_Y.MIN, COORDS_Y.MAX);
 
-  var time = getRandomArrElement(TIMES);
+  var checkin = getRandomArrElement(TIMES);
+  var checkout = getRandomArrElement(TIMES);
   var descriptions = getRandomArrElement(TITLES);
   var roomsNumber = getRandomArrElement(ROOMS_COUNT);
   var guestsNumber = getNumberRooms(roomsNumber);
@@ -189,13 +190,13 @@ var createAd = function (i) {
     },
     offer: {
       title: descriptions.title,
-      address: +x + ', ' + y,
+      address: x + ', ' + y,
       price: roomType.minPrice,
       type: roomType.type,
       rooms: roomsNumber,
       guests: guestsNumber,
-      checkin: 'после ' + time,
-      checkout: 'до ' + time,
+      checkin: 'после ' + checkin,
+      checkout: 'до ' + checkout,
       features: features,
       description: descriptions.description,
       photos: photos,
