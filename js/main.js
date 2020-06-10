@@ -171,7 +171,7 @@ var getNumberRooms = function (rooms) {
 };
 
 // создает одно объявление
-var createAd = function (i) {
+var createAd = function (number) {
   var x = getRandomNumber(COORDS_X.MIN, COORDS_X.MAX);
   var y = getRandomNumber(COORDS_Y.MIN, COORDS_Y.MAX);
 
@@ -186,7 +186,7 @@ var createAd = function (i) {
 
   return {
     author: {
-      avatar: getUserAvatar(i + 1)
+      avatar: getUserAvatar(number + 1)
     },
     offer: {
       title: descriptions.title,
@@ -253,21 +253,40 @@ var renderCard = function (ad) {
   }
   return mapElement;
 };
+
+var createAds = function () {
+  var adArray = [];
+  for (var i = 0; i < AD_COUNT; i++) {
+    var ad = createAd(i);
+    adArray.push(ad);
+  }
+  return adArray;
+};
+
 /* <=== /FUNCTIONS ===> */
 
 
 /* <=== FUNCTION CALLS ===> */
 
-// рендерим все пины
-for (var i = 0; i < AD_COUNT; i++) {
-  var fragment = document.createDocumentFragment();
-  var ad = createAd(i);
-  fragment.appendChild(renderPin(ad));
-  if (i === 0) {
-    fragment.appendChild(renderCard(ad));
-  }
-  mapPins.appendChild(fragment);
+// создает все объявления
+var ads = createAds();
+
+// рендерит все пины
+var fragment = document.createDocumentFragment();
+for (var j = 0; j < ads.length; j++) {
+  fragment.appendChild(renderPin(ads[j]));
 }
+// добавляет созданные пины в DOM
+mapPins.appendChild(fragment);
+
+// создает новый фрагмент
+fragment = document.createDocumentFragment();
+
+// рендерит одну карточку
+fragment.appendChild(renderCard(ads[0]));
+
+// добавляет карточку обяъвления в DOM
+map.appendChild(fragment);
 
 map.classList.remove('map--faded');
 
