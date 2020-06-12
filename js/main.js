@@ -380,7 +380,7 @@ roomsSelect.addEventListener('change', function () {
   for (var i = 0; i < guestsSelect.options.length; i++) {
     guestsSelect.options[i].disabled = (guestCount === '0') ?
       (guestsSelect.options[i].value !== '0') :
-      (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0')
+      (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0');
   }
 });
 /* конец валидации форм */
