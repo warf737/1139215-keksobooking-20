@@ -77,18 +77,22 @@ var COORDS_Y = {
 var ROOM_TYPES = [
   {
     type: 'Дворец',
+    value: 'palace',
     minPrice: 10000
   },
   {
     type: 'Квартира',
+    value: 'flat',
     minPrice: 1000
   },
   {
     type: 'Дом',
+    value: 'house',
     minPrice: 5000
   },
   {
     type: 'Бунгало',
+    value: 'bungalo',
     minPrice: 0
   }
 ];
@@ -325,7 +329,6 @@ var closePopup = function () {
 };
 
 var onPopupEscPress = function (evt) {
-  console.log(evt.key);
   if (evt.key === 'Escape') {
     closePopup();
   }
@@ -347,13 +350,39 @@ changeAccessibility(fieldsets);
 mapPinMain.addEventListener('mouseup', activatePage);
 mapPinMain.addEventListener('keydown', onMainPinPressEnter);
 
-// создает новый фрагмент
-// fragment = document.createDocumentFragment();
-// рендерит одну карточку
-// fragment.appendChild(renderCard(ads[0]));
-//
-// добавляет карточку объявления в DOM
-// map.appendChild(fragment);
+/* Валидация форм*/
+var checkinSelect = form.querySelector('#timein');
+var checkoutSelect = form.querySelector('#timeout');
+var typeSelect = form.querySelector('#type');
+var priceInput = form.querySelector('#price');
+var roomsSelect = form.querySelector('#room_number');
+var guestsSelect = form.querySelector('#capacity');
 
+checkinSelect.addEventListener('change', function () {
+  checkoutSelect.options[checkinSelect.selectedIndex].selected = true;
+});
+checkoutSelect.addEventListener('change', function () {
+  checkinSelect.options[checkoutSelect.selectedIndex].selected = true;
+});
+
+typeSelect.addEventListener('change', function () {
+  for (var i = 0; i < ROOM_TYPES.length; i++) {
+    if (ROOM_TYPES[i].value === typeSelect.value) {
+      priceInput.min = ROOM_TYPES[i].minPrice;
+      break;
+    }
+  }
+});
+
+roomsSelect.addEventListener('change', function () {
+  var guestCount = (roomsSelect.value === '100') ? '0' : roomsSelect.value;
+
+  for (var i = 0; i < guestsSelect.options.length; i++) {
+    guestsSelect.options[i].disabled = (guestCount === '0') ?
+      (guestsSelect.options[i].value !== '0') :
+      (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0')
+  }
+});
+/* конец валидации форм */
 
 /* <=== /FUNCTION CALLS ===> */
