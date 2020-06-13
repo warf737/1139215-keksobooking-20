@@ -8,6 +8,7 @@ var mapPins = document.querySelector('.map__pins');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapPinMain = document.querySelector('.map__pin--main');
 var form = document.querySelector('.ad-form--disabled');
+var addressInput = form.querySelector('#address');
 var fieldsets = form.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
 var lastActiveElement;
@@ -264,6 +265,7 @@ var createAds = function () {
   }
   return adArray;
 };
+// делает страницу активной
 var activatePage = function () {
   for (var j = 0; j < ads.length; j++) {
     fragment.appendChild(renderPin(ads[j], j));
@@ -275,7 +277,6 @@ var activatePage = function () {
 
   // делает все поля формы доступными
   changeAccessibility(fieldsets);
-
   /* назначает обработчик showPopups на элемент 'Карта',
      в котором расположены элементы 'Метка объявления на карте'*/
   mapPins.addEventListener('click', showPopUps);
@@ -284,7 +285,6 @@ var activatePage = function () {
   mapPinMain.removeEventListener('mouseup', activatePage);
   mapPinMain.removeEventListener('keydown', onMainPinPressEnter);
 };
-
 // изменяет доступность для редактирования
 var changeAccessibility = function (array) {
   array.forEach(function (elem) {
@@ -292,7 +292,18 @@ var changeAccessibility = function (array) {
   });
 };
 
-// активирует страницу при нажатии клавиши Enter при фокусе на главном пине
+var changeAddressOnForm = function (coordLeft, coordTop) {
+  var x = regExpCoord(coordLeft);
+  var y = regExpCoord(coordTop);
+  addressInput.value = generateAddress(x, y);
+};
+var regExpCoord = function (coordinate) {
+  return coordinate.replace(/[^+\d]/g, '');
+};
+var generateAddress = function (x, y) {
+  return 'x:' + x + ', ' + 'y:' + y;
+};
+// активирует страницу при нажатии клавиши Enter если есть фокус на главном пине
 var onMainPinPressEnter = function (evt) {
   if (evt.key === 'Enter') {
     activatePage();
@@ -311,7 +322,7 @@ var showPopUps = function (evt) {
     lastActiveElement = target;
     popup = renderCard(ads[lastActiveElement.number]);
     map.appendChild(popup);
-
+    changeAddressOnForm(lastActiveElement.style.left, lastActiveElement.style.top);
     popupClose = map.querySelector('.popup__close');
     popupClose.addEventListener('click', closePopup);
     document.addEventListener('keydown', onPopupEscPress);
@@ -337,6 +348,7 @@ var onPopupEscPress = function (evt) {
 
 
 /* <=== FUNCTION CALLS ===> */
+addressInput.value = generateAddress(mapPinMain.style.left, mapPinMain.style.top);
 
 // создает все объявления
 var ads = createAds();
