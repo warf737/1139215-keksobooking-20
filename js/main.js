@@ -3,20 +3,20 @@
 (function () {
 /* <=== CONSTANTS & VARIABLES===> */
 
-var map = document.querySelector('.map');
-var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var mapPins = document.querySelector('.map__pins');
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var mapPinMain = document.querySelector('.map__pin--main');
-var form = document.querySelector('.ad-form--disabled');
-var addressInput = form.querySelector('#address');
-var fieldsets = form.querySelectorAll('fieldset');
-var fragment = document.createDocumentFragment();
-var lastActiveElement;
-var popup;
-var popupClose;
+  var map = document.querySelector('.map');
+  var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var mapPins = document.querySelector('.map__pins');
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var form = document.querySelector('.ad-form--disabled');
+  var addressInput = form.querySelector('#address');
+  var fieldsets = form.querySelectorAll('fieldset');
+  var fragment = document.createDocumentFragment();
+  var lastActiveElement;
+  var popup;
+  var popupClose;
 
-var TITLES = [
+  var TITLES = [
     {
       title: 'Тихая квартирка недалеко от метро',
       description: 'Квартира на первом этаже. Соседи тихие. Для всех, кто терпеть не может шума и суеты.'
