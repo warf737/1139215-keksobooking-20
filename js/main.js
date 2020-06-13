@@ -301,7 +301,7 @@ var regExpCoord = function (coordinate) {
   return coordinate.replace(/[^+\d]/g, '');
 };
 var generateAddress = function (x, y) {
-  return 'x:' + x + ', ' + 'y:' + y;
+  return 'top:' + y + ', ' + 'left:' + x;
 };
 // активирует страницу при нажатии клавиши Enter если есть фокус на главном пине
 var onMainPinPressEnter = function (evt) {
