@@ -273,8 +273,8 @@
     }
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
-    map.classList.remove('.map--faded');
-    form.classList.remove('.ad-form--disabled');
+    map.classList.remove('map--faded');
+    form.classList.remove('ad-form--disabled');
 
     // делает все поля формы доступными
     changeActivity(fieldsets);
@@ -315,7 +315,7 @@
 
     if (target && target !== mapPinMain) {
       if (lastActiveElement) {
-        lastActiveElement.classList.remove('.map__pin--active');
+        lastActiveElement.classList.remove('map__pin--active');
         popup.remove();
       }
       target.classList.add('.map__pin--active');
@@ -333,7 +333,7 @@
     }
   };
   var closePopup = function () {
-    lastActiveElement.classList.remove('.map__pin--active');
+    lastActiveElement.classList.remove('map__pin--active');
     popup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };
