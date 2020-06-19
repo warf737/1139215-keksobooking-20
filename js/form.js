@@ -48,12 +48,12 @@ window.form = (function () {
     }
   };
 
+  var generateAddress = function (x, y) {
+    return 'top:' + y + ', ' + 'left:' + x;
+  };
   addressInput.value = generateAddress(mapPinMain.style.left, mapPinMain.style.top);
   var regExpCoord = function (coordinate) {
     return coordinate.replace(/[^+\d]/g, '');
-  };
-  var generateAddress = function (x, y) {
-    return 'top:' + y + ', ' + 'left:' + x;
   };
   var changeAddressOnForm = function (coordLeft, coordTop) {
     var x = regExpCoord(coordLeft);

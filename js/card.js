@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+window.card = (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var articleRooms = function (numberRooms) {

@@ -7,15 +7,15 @@
   var fragment = document.createDocumentFragment();
   var form = document.querySelector('.ad-form');
   var fieldsets = form.querySelectorAll('fieldset');
-  var data = window.data;
+  var ads = window.ads;
   var popup;
   var popupClose;
   var lastActiveElement;
 
   // делает страницу активной
   var activatePage = function () {
-    for (var j = 0; j < data.ads.length; j++) {
-      fragment.appendChild(window.pin.renderPin(data.ads[j], j));
+    for (var j = 0; j < ads.ads.length; j++) {
+      fragment.appendChild(window.pin.renderPin(ads.ads[j], j));
     }
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
@@ -64,7 +64,7 @@
       }
       target.classList.add('.map__pin--active');
       lastActiveElement = target;
-      popup = window.card.renderCard(window.ads.ads[lastActiveElement.number]);
+      popup = window.card.renderCard(ads.ads[lastActiveElement.number]);
       map.appendChild(popup);
       window.form.changeAddressOnForm(lastActiveElement.style.left, lastActiveElement.style.top);
       popupClose = map.querySelector('.popup__close');

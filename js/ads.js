@@ -26,8 +26,8 @@ window.ads = (function () {
 
   // создает одно объявление
   var createAd = function (number) {
-    var x = utils.getRandomNumber(data.coordsX.min, data.coordsX.MAX);
-    var y = utils.getRandomNumber(data.coordsY.MIN, data.coordsY.MAX);
+    var x = utils.getRandomNumber(data.coordsX.min, data.coordsX.max);
+    var y = utils.getRandomNumber(data.coordsY.min, data.coordsY.max);
 
     var checkin = utils.getRandomArrElement(data.times);
     var checkout = utils.getRandomArrElement(data.times);
