@@ -61,7 +61,6 @@ window.form = (function () {
   var setAddress = function (coordLeft, coordTop) {
     var x = regExpCoord(coordLeft);
     var y = regExpCoord(coordTop);
-    console.log('x', x, 'y', y);
     addressInput.value = generateAddress(x, y);
   };
 
