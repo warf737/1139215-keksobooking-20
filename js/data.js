@@ -105,6 +105,12 @@ window.data = (function () {
     x: 20,
     y: 20
   };
+  var MAIN_PIN_SIZE = {
+    x: 65,
+    y: 65,
+    arrow: 22
+
+  };
 
   return {
     titles: TITLES,
@@ -116,6 +122,7 @@ window.data = (function () {
     features: FEATURES,
     adCount: AD_COUNT,
     pinSize: PIN_SIZE,
-    roomTypes: ROOM_TYPES
+    roomTypes: ROOM_TYPES,
+    mainPinSize: MAIN_PIN_SIZE
   };
 })();

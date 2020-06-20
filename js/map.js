@@ -14,6 +14,8 @@
 
   // делает страницу активной
   var activatePage = function () {
+    mapPinMain.addEventListener('mousedown', window.move.onMainPinMouseDown);
+
     for (var j = 0; j < ads.ads.length; j++) {
       fragment.appendChild(window.pin.renderPin(ads.ads[j], j));
     }
@@ -24,6 +26,7 @@
 
     // делает все поля формы доступными
     changeActivity(fieldsets);
+
     /* назначает обработчик showPopups на элемент 'Карта',
        в котором расположены элементы 'Метка объявления на карте'*/
     mapPins.addEventListener('click', showPopUps);
@@ -66,7 +69,7 @@
       lastActiveElement = target;
       popup = window.card.renderCard(ads.ads[lastActiveElement.number]);
       map.appendChild(popup);
-      window.form.changeAddressOnForm(lastActiveElement.style.left, lastActiveElement.style.top);
+      window.form.setAddress(lastActiveElement.style.left, lastActiveElement.style.top);
       popupClose = map.querySelector('.popup__close');
       popupClose.addEventListener('click', closePopup);
       document.addEventListener('keydown', onPopupEscPress);

@@ -51,15 +51,26 @@ window.form = (function () {
   var generateAddress = function (x, y) {
     return 'top:' + y + ', ' + 'left:' + x;
   };
-  addressInput.value = generateAddress(mapPinMain.style.left, mapPinMain.style.top);
   var regExpCoord = function (coordinate) {
-    return coordinate.replace(/[^+\d]/g, '');
+    var type = typeof coordinate;
+    if (type === 'string') {
+      coordinate = coordinate.replace(/[^+\d.]/g, '');
+    }
+    return coordinate;
   };
-  var changeAddressOnForm = function (coordLeft, coordTop) {
+  var setAddress = function (coordLeft, coordTop) {
     var x = regExpCoord(coordLeft);
     var y = regExpCoord(coordTop);
+    console.log('x', x, 'y', y);
     addressInput.value = generateAddress(x, y);
   };
+
+  // устанавливает координаты главного пина в строку адреса при загрузке страницы
+  var mapPinMainCoords = {
+    x: mapPinMain.style.left,
+    y: mapPinMain.style.top + Math.floor(window.data.mainPinSize.y / 2) + window.data.mainPinSize.arrow
+  };
+  addressInput.value = generateAddress(mapPinMainCoords.x, mapPinMainCoords.y);
 
   checkinSelect.addEventListener('change', function () {
     syncTimes(checkinSelect, checkoutSelect);
@@ -95,8 +106,8 @@ window.form = (function () {
     titleInput.setCustomValidity(inputError);
   });
 
-  // Выводит сообщение при неправильно заполненной цене
-  // и выделяет неверно заполненные поля красной рамкой
+  /* Выводит сообщение при неправильно заполненной цене
+  и выделяет неверно заполненные поля красной рамкой */
   priceInput.addEventListener('input', function () {
     var inputError;
     if (!priceInput.validity.valid) {
@@ -120,7 +131,6 @@ window.form = (function () {
   syncCountGuestsWithRooms();
 
   return {
-    changeAddressOnForm: changeAddressOnForm,
-
+    setAddress: setAddress,
   };
 })();
