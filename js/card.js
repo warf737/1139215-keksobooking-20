@@ -30,7 +30,7 @@ window.card = (function () {
 
     featureList.innerHTML = '';
     for (var i = 0; i < ad.offer.features.length; i++) {
-      var featureElement = '<li class="feature feature--' + ad.offer.features[i] + '"></li>';
+      var featureElement = '<li class="popup__feature popup__feature--' + ad.offer.features[i] + '"></li>';
       featureList.insertAdjacentHTML('afterbegin', featureElement);
     }
 
