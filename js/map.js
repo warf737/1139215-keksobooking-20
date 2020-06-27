@@ -65,9 +65,9 @@
         lastActiveElement.classList.remove('map__pin--active');
         popup.remove();
       }
-      target.classList.add('.map__pin--active');
+      target.classList.add('map__pin--active');
       lastActiveElement = target;
-      popup = window.card.renderCard(ads.ads[lastActiveElement.number]);
+      popup = window.card.renderCard(window.ads.ads[lastActiveElement.number]);
       map.appendChild(popup);
       window.form.setAddress(lastActiveElement.style.left, lastActiveElement.style.top);
       popupClose = map.querySelector('.popup__close');
