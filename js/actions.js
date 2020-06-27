@@ -1,8 +1,7 @@
 'use strict';
 
-window.backend = (function () {
-  var StatusCode = {
-    200: 'ОК',
+window.actions = (function () {
+  var ErrorCode = {
     400: 'Неверный запрос',
     401: 'Пользователь не авторизован',
     404: 'Ничего на найдено',
@@ -19,26 +18,25 @@ window.backend = (function () {
       if (xhr.status === 200) {
         req(xhr.response);
       } else {
-        error(StatusCode[xhr.status]);
+        error(ErrorCode[xhr.status]);
       }
     });
 
-    xhr.addEventListener('error', function() {
+    xhr.addEventListener('error', function () {
       error('Произошла ошибка соединения');
     });
 
-    xhr.addEventListener('timeout', function() {
+    xhr.addEventListener('timeout', function () {
       error('Привышен интервал ожидания запроса');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT_IN_MS;
     return xhr;
   };
 
 
   var load = function (req, error) {
     var xhr = request(req, error);
-
     xhr.open('GET', URL + 'data');
     xhr.send();
   };

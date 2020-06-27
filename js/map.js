@@ -7,7 +7,6 @@
   var fragment = document.createDocumentFragment();
   var form = document.querySelector('.ad-form');
   var fieldsets = form.querySelectorAll('fieldset');
-  var ads = window.ads;
   var popup;
   var popupClose;
   var lastActiveElement;
@@ -16,9 +15,10 @@
   var activatePage = function () {
     mapPinMain.addEventListener('mousedown', window.move.onMainPinMouseDown);
 
-    for (var j = 0; j < ads.ads.length; j++) {
-      fragment.appendChild(window.pin.renderPin(ads.ads[j], j));
+    for (var j = 0; j < window.ads.ads.length; j++) {
+      fragment.appendChild(window.pin.renderPin(window.ads.ads[j], j));
     }
+    // window.pin.loadDataPins();
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
     map.classList.remove('map--faded');
