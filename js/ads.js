@@ -64,7 +64,6 @@ window.ads = (function () {
 
   var ads = [];
   var createAds = function (data) {
-    console.log(data);
     for (var i = 0; i < data.length; i++) {
       ads.push(data[i]);
     }
@@ -76,7 +75,6 @@ window.ads = (function () {
   };
 
   loadDataPins();
-  console.log('ads1', ads);
 
   return {
     ads: ads
