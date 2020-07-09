@@ -12,6 +12,8 @@ window.form = (function () {
   var roomsSelect = form.querySelector('#room_number');
   var guestsSelect = form.querySelector('#capacity');
   var data = window.data;
+  var clearButton = form.querySelector('.ad-form__reset');
+
 
   // синхронизирует поля заезда и выезда из номера
   var syncTimes = function (timeItemFrom, timeItemTo) {
@@ -45,6 +47,12 @@ window.form = (function () {
       guestsSelect.options[i].disabled = (guestCount === '0') ?
         (guestsSelect.options[i].value !== '0') :
         (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0');
+
+      if (guestsSelect.options[i].disabled && guestsSelect.options[i].selected) {
+        guestsSelect.options[i].selected = false;
+      } else if (!guestsSelect.options[i].disabled && !guestsSelect.options[i].selected) {
+        guestsSelect.options[i].selected = true;
+      }
     }
   };
 
@@ -71,6 +79,24 @@ window.form = (function () {
   };
   addressInput.value = generateAddress(mapPinMainCoords.x, mapPinMainCoords.y);
 
+  var resetForm = function () {
+    form.reset();
+  };
+  var successHandler = function () {
+    // создает сообщение о успещной отправке данных
+    window.messages.createSuccessPopup();
+    // сбрасывает значения формы
+    resetForm();
+    // отключает форму
+    window.map.activatePage();
+    // убирает пины
+    window.map.clearPins();
+    syncCountGuestsWithRooms();
+  };
+
+  /*
+  * Прослушивание событий
+  * */
   checkinSelect.addEventListener('change', function () {
     syncTimes(checkinSelect, checkoutSelect);
   });
@@ -124,10 +150,15 @@ window.form = (function () {
     }
     priceInput.setCustomValidity(inputError);
   });
-
+  clearButton.addEventListener('click', resetForm);
   syncTimes(checkinSelect, checkoutSelect);
   syncTypeFromPrice();
   syncCountGuestsWithRooms();
+  setAddress(mapPinMain.style.left, mapPinMain.style.top);
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.actions.save(new FormData(form), successHandler, window.messages.createErrorPopup);
+  });
 
   return {
     setAddress: setAddress,

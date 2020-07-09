@@ -8,7 +8,7 @@ window.actions = (function () {
     500: 'Ошибка сервера'
   };
   var TIMEOUT_IN_MS = 10000;
-  var URL = 'https://javascript.pages.academy/keksobooking/';
+  var URL = 'https://javascript.pages.academy/keksobooking';
 
   var request = function (req, error) {
     var xhr = new XMLHttpRequest();
@@ -37,11 +37,11 @@ window.actions = (function () {
 
   var load = function (req, error) {
     var xhr = request(req, error);
-    xhr.open('GET', URL + 'data');
+    xhr.open('GET', URL + '/data');
     xhr.send();
   };
 
-  var send = function(data, req, error) {
+  var save = function (data, req, error) {
     var xhr = request(req, error);
     xhr.open('POST', URL);
     xhr.send(data);
@@ -49,6 +49,6 @@ window.actions = (function () {
 
   return {
     load: load,
-    send: send
+    save: save
   };
 })();
