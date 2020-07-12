@@ -1,12 +1,14 @@
 'use strict';
 
-(function () {
+window.map = (function () {
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
   var fragment = document.createDocumentFragment();
   var form = document.querySelector('.ad-form');
   var fieldsets = form.querySelectorAll('fieldset');
+  var mapPinMinCoordLeft = mapPinMain.style.left;
+  var mapPinMinCoordTop = mapPinMain.style.top;
   var popup;
   var popupClose;
   var lastActiveElement;
@@ -18,14 +20,13 @@
     for (var j = 0; j < window.ads.ads.length; j++) {
       fragment.appendChild(window.pin.renderPin(window.ads.ads[j], j));
     }
-    // window.pin.loadDataPins();
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
-    map.classList.remove('map--faded');
-    form.classList.remove('ad-form--disabled');
+    map.classList.toggle('map--faded');
+    form.classList.toggle('ad-form--disabled');
 
     // делает все поля формы доступными
-    changeActivity(fieldsets);
+    changeActivity();
 
     /* назначает обработчик showPopups на элемент 'Карта',
        в котором расположены элементы 'Метка объявления на карте'*/
@@ -36,10 +37,25 @@
     mapPinMain.removeEventListener('keydown', onMainPinPressEnter);
   };
 
+  var clearPins = function () {
+    var pins = mapPins.querySelectorAll('.map__pin');
+    for (var i = 0; i < pins.length; i++) {
+      if (!pins[i].classList.contains('map__pin--main')) {
+        mapPins.removeChild(pins[i]);
+      }
+    }
+    mapPinMain.removeEventListener('mousedown', window.move.onMainPinMouseDown);
+    mapPinMain.addEventListener('mouseup', activatePage);
+    mapPinMain.addEventListener('keydown', onMainPinPressEnter);
+    window.form.setAddress(mapPinMinCoordLeft, mapPinMinCoordTop);
+    mapPinMain.style.left = mapPinMinCoordLeft;
+    mapPinMain.style.top = mapPinMinCoordTop;
+  };
+
   // изменяет доступность для редактирования
-  var changeActivity = function (array) {
-    array.forEach(function (elem) {
-      elem.disabled = (!elem.disabled);
+  var changeActivity = function () {
+    fieldsets.forEach(function (elem) {
+      elem.disabled = !elem.disabled;
     });
   };
 
@@ -51,7 +67,7 @@
   };
 
   // Делает все поля формы недоступными в момент открытия страницы
-  changeActivity(fieldsets);
+  changeActivity();
 
   // Добавляет обработчики на элемент 'Главный пин'
   mapPinMain.addEventListener('mouseup', activatePage);
@@ -88,5 +104,9 @@
     if (evt.key === 'Escape') {
       closePopup();
     }
+  };
+  return {
+    activatePage: activatePage,
+    clearPins: clearPins
   };
 })();

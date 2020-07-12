@@ -1,7 +1,6 @@
 'use strict';
 
 window.move = (function () {
-  var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var data = window.data;
   var mainPinSize = window.data.mainPinSize;
