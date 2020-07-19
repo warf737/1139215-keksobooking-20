@@ -57,7 +57,8 @@ window.form = (function () {
   };
 
   var generateAddress = function (x, y) {
-    return `top:, ${y}, left: ${x}`;
+    // eslint-disable-next-line
+    return 'top:' + y + ', ' + 'left:' + x;
   };
   var regExpCoord = function (coordinate) {
     var type = typeof coordinate;

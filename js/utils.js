@@ -11,6 +11,7 @@ window.utils = (function () {
   var shuffleArr = function (arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+      var j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
       var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
     return arr;
@@ -42,7 +43,7 @@ window.utils = (function () {
     getRandomArrElement: function (arr) {
       return arr[getRandomNumber(0, arr.length - 1)];
     },
-    generateRandomArray: function (arr, size) {
+    generateRandomArray: function (arr) {
       var copiedArr = arr;
       var randomArrLength = getRandomNumber(0, copiedArr.length);
       copiedArr = shuffleArr(copiedArr);
