@@ -11,7 +11,6 @@ window.utils = (function () {
   var shuffleArr = function (arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
-      var j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
       var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
     return arr;
