@@ -10,6 +10,7 @@ window.pin = (function () {
     pinElement.style.left = ad.location.x - state.pinSize.x / 2 + 'px';
     pinElement.style.top = ad.location.y + state.pinSize.y + 'px';
     pinElement.number = number;
+    pinElement.title = ad.offer.title;
     return pinElement;
   };
 

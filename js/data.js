@@ -100,7 +100,7 @@ window.data = (function () {
     'elevator',
     'conditioner'
   ];
-  var AD_COUNT = 8;
+  var AD_COUNT = 5;
   var PIN_SIZE = {
     x: 20,
     y: 20
@@ -112,6 +112,7 @@ window.data = (function () {
 
   };
 
+  var ads = [];
   return {
     titles: TITLES,
     photos: PHOTOS,
@@ -123,6 +124,7 @@ window.data = (function () {
     adCount: AD_COUNT,
     pinSize: PIN_SIZE,
     roomTypes: ROOM_TYPES,
-    mainPinSize: MAIN_PIN_SIZE
+    mainPinSize: MAIN_PIN_SIZE,
+    ads: ads,
   };
 })();

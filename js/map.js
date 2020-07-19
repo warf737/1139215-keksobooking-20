@@ -12,19 +12,15 @@ window.map = (function () {
   var popup;
   var popupClose;
   var lastActiveElement;
+  var state = window.data;
 
   // делает страницу активной
   var activatePage = function () {
     mapPinMain.addEventListener('mousedown', window.move.onMainPinMouseDown);
 
-    for (var j = 0; j < window.ads.ads.length; j++) {
-      fragment.appendChild(window.pin.renderPin(window.ads.ads[j], j));
-    }
-    // добавляет созданные пины в DOM
-    mapPins.appendChild(fragment);
+    renderAllPins(window.data.ads);
     map.classList.toggle('map--faded');
     form.classList.toggle('ad-form--disabled');
-
     // делает все поля формы доступными
     changeActivity();
 
@@ -35,6 +31,15 @@ window.map = (function () {
     // удаляет обработчики с элемента 'Главный пин'
     mapPinMain.removeEventListener('mouseup', activatePage);
     mapPinMain.removeEventListener('keydown', onMainPinPressEnter);
+  };
+
+  var renderAllPins = function (data) {
+    var numberAds = data.length > window.data.adCount ? window.data.adCount : data.length;
+    for (var j = 0; j < numberAds; j++) {
+      fragment.appendChild(window.pin.renderPin(data[j], j));
+    }
+    // добавляет созданные пины в DOM
+    mapPins.appendChild(fragment);
   };
 
   var clearPins = function () {
@@ -83,7 +88,10 @@ window.map = (function () {
       }
       target.classList.add('map__pin--active');
       lastActiveElement = target;
-      popup = window.card.renderCard(window.ads.ads[lastActiveElement.number]);
+      var adForRender = window.data.ads.find(function (ad) {
+        return ad.offer.title === lastActiveElement.title;
+      });
+      popup = window.card.renderCard(adForRender);
       map.appendChild(popup);
       window.form.setAddress(lastActiveElement.style.left, lastActiveElement.style.top);
       popupClose = map.querySelector('.popup__close');
@@ -96,17 +104,30 @@ window.map = (function () {
     }
   };
   var closePopup = function () {
-    lastActiveElement.classList.remove('map__pin--active');
-    popup.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
+    if (lastActiveElement) {
+      lastActiveElement.classList.remove('map__pin--active');
+      popup.classList.add('hidden');
+      document.removeEventListener('keydown', onPopupEscPress);
+    }
   };
   var onPopupEscPress = function (evt) {
     if (evt.key === 'Escape') {
       closePopup();
     }
   };
+
+  var updateMap = function () {
+    closePopup();
+    state.ads = window.utils.shuffleArr(state.ads);
+    // state.filteredAds = window.filter.filterAds(state.ads);
+    clearPins();
+    renderAllPins(window.filter.filterAds(state.ads));
+  };
+
   return {
     activatePage: activatePage,
-    clearPins: clearPins
+    clearPins: clearPins,
+    renderPins: renderAllPins,
+    updateMap: updateMap
   };
 })();

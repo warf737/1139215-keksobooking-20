@@ -39,7 +39,7 @@ window.form = (function () {
     return minPrice;
   };
 
-  // синхронизирует количество гостей с типом выбранного жилья
+  // синхронизирует количество комнат с количеством мест
   var syncCountGuestsWithRooms = function () {
     var guestCount = (roomsSelect.value === '100') ? '0' : roomsSelect.value;
 
@@ -57,7 +57,7 @@ window.form = (function () {
   };
 
   var generateAddress = function (x, y) {
-    return 'top:' + y + ', ' + 'left:' + x;
+    return `top:, ${y}, left: ${x}`;
   };
   var regExpCoord = function (coordinate) {
     var type = typeof coordinate;
@@ -82,6 +82,7 @@ window.form = (function () {
   var resetForm = function () {
     form.reset();
   };
+
   var successHandler = function () {
     // создает сообщение о успещной отправке данных
     window.messages.createSuccessPopup();

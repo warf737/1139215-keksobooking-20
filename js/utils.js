@@ -27,6 +27,14 @@ window.utils = (function () {
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
+  var debounce = function (action, interval) {
+    var lastTimeout;
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(action, interval);
+  };
+
   return {
     getRandomNumber: function (min, max) {
       return getRandomNumber(min, max);
@@ -34,13 +42,15 @@ window.utils = (function () {
     getRandomArrElement: function (arr) {
       return arr[getRandomNumber(0, arr.length - 1)];
     },
-    generateRandomArray: function (arr) {
+    generateRandomArray: function (arr, size) {
       var copiedArr = arr;
       var randomArrLength = getRandomNumber(0, copiedArr.length);
       copiedArr = shuffleArr(copiedArr);
       var features = shuffleArr(copiedArr).slice(0, randomArrLength);
       return features;
     },
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    debounce: debounce,
+    shuffleArr: shuffleArr
   };
 })();
