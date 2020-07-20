@@ -119,7 +119,6 @@ window.map = (function () {
   var updateMap = function () {
     closePopup();
     state.ads = window.utils.shuffleArr(state.ads);
-    // state.filteredAds = window.filter.filterAds(state.ads);
     clearPins();
     renderAllPins(window.filter.filterAds(state.ads));
   };
