@@ -13,7 +13,11 @@ window.form = (function () {
   var guestsSelect = form.querySelector('#capacity');
   var data = window.data;
   var clearButton = form.querySelector('.ad-form__reset');
-
+  var avatarChooser = form.querySelector('#avatar');
+  var photoChooser = form.querySelector('#images');
+  var avatarPreview = form.querySelector('.ad-form-header__preview').querySelector('img');
+  var photoPreview = form.querySelector('.ad-form__photo');
+  var photos = [];
 
   // синхронизирует поля заезда и выезда из номера
   var syncTimes = function (timeItemFrom, timeItemTo) {
@@ -160,6 +164,48 @@ window.form = (function () {
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.actions.save(new FormData(form), successHandler, window.messages.createErrorPopup);
+  });
+
+  // Загружает аватар
+  avatarChooser.addEventListener('change', function () {
+    var file = avatarChooser.files[0];
+    var fileName = file.name.toLowerCase();
+    var matches = data.fileTypes.some(function (it) {
+      return fileName.endsWith(it);
+    });
+    if (matches) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function () {
+        avatarPreview.src = reader.result;
+      });
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Загружает фотографии объявления
+  photoChooser.addEventListener('change', function () {
+    Array.from(photoChooser.files).forEach(function (file) {
+      var fileName = file.name.toLowerCase();
+
+      var matches = data.fileTypes.some(function (it) {
+        return fileName.endsWith(it);
+      });
+
+      if (matches) {
+        var reader = new FileReader();
+
+        reader.addEventListener('load', function () {
+          var photo = document.createElement('img');
+          photo.style.height = '100px';
+          photo.style.margin = '5px';
+          photo.src = reader.result;
+          photoPreview.appendChild(photo);
+          photos.push(photo);
+        });
+
+        reader.readAsDataURL(file);
+      }
+    });
   });
 
   return {
