@@ -4,7 +4,7 @@ window.card = (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var ROOMS_COUNT = {min: 1, max: 100};
 
-  var articleRooms = function (numberRooms) {
+  var generateArticleRooms = function (numberRooms) {
     var article = ' комната ';
     if (numberRooms > ROOMS_COUNT.min && numberRooms < ROOMS_COUNT.max) {
       article = ' комнаты ';
@@ -19,7 +19,7 @@ window.card = (function () {
     var mapElement = cardTemplate.cloneNode(true);
     var featureList = mapElement.querySelector('.popup__features');
     var photos = mapElement.querySelector('.popup__photos');
-    var articleRoom = articleRooms(ad.offer.rooms);
+    var articleRoom = generateArticleRooms(ad.offer.rooms);
     mapElement.querySelector('.popup__title').textContent = ad.offer.title;
     mapElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     mapElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';

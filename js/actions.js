@@ -10,7 +10,7 @@ window.actions = (function () {
   var TIMEOUT_IN_MS = 10000;
   var URL = 'https://javascript.pages.academy/keksobooking';
 
-  var request = function (req, error) {
+  var createRequest = function (req, error) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -36,13 +36,13 @@ window.actions = (function () {
 
 
   var load = function (req, error) {
-    var xhr = request(req, error);
+    var xhr = createRequest(req, error);
     xhr.open('GET', URL + '/data');
     xhr.send();
   };
 
   var save = function (data, req, error) {
-    var xhr = request(req, error);
+    var xhr = createRequest(req, error);
     xhr.open('POST', URL);
     xhr.send(data);
   };
