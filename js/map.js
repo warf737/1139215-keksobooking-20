@@ -26,11 +26,11 @@ window.map = (function () {
 
     /* назначает обработчик showPopups на элемент 'Карта',
        в котором расположены элементы 'Метка объявления на карте'*/
-    mapPins.addEventListener('click', showPopUps);
+    mapPins.addEventListener('click', onClickPin);
 
     // удаляет обработчики с элемента 'Главный пин'
-    mapPinMain.removeEventListener('mouseup', activatePage);
-    mapPinMain.removeEventListener('keydown', onMainPinPressEnter);
+    mapPinMain.removeEventListener('mouseup', onClickMainPin);
+    mapPinMain.removeEventListener('keydown', onPressKey);
   };
 
   var renderAllPins = function (data) {
@@ -50,8 +50,8 @@ window.map = (function () {
       }
     }
     mapPinMain.removeEventListener('mousedown', window.move.onMainPinMouseDown);
-    mapPinMain.addEventListener('mouseup', activatePage);
-    mapPinMain.addEventListener('keydown', onMainPinPressEnter);
+    mapPinMain.addEventListener('mouseup', onClickMainPin);
+    mapPinMain.addEventListener('keydown', onPressKey);
     window.form.setAddress(mapPinMinCoordLeft, mapPinMinCoordTop);
     mapPinMain.style.left = mapPinMinCoordLeft;
     mapPinMain.style.top = mapPinMinCoordTop;
@@ -64,19 +64,8 @@ window.map = (function () {
     });
   };
 
-  // активирует страницу при нажатии клавиши Enter если есть фокус на главном пине
-  var onMainPinPressEnter = function (evt) {
-    if (evt.key === 'Enter') {
-      activatePage();
-    }
-  };
-
   // Делает все поля формы недоступными в момент открытия страницы
   changeActivity();
-
-  // Добавляет обработчики на элемент 'Главный пин'
-  mapPinMain.addEventListener('mouseup', activatePage);
-  mapPinMain.addEventListener('keydown', onMainPinPressEnter);
 
   var showPopUps = function (evt) {
     var target = evt.target.closest('.map__pin');
@@ -95,29 +84,44 @@ window.map = (function () {
       map.appendChild(popup);
       window.form.setAddress(lastActiveElement.style.left, lastActiveElement.style.top);
       popupClose = map.querySelector('.popup__close');
-      popupClose.addEventListener('click', closePopup);
-      document.addEventListener('keydown', onPopupEscPress);
-
+      popupClose.addEventListener('click', onClickClose);
+      document.addEventListener('keydown', onPressKey);
     }
     if (popup && target === mapPinMain) {
-      closePopup();
+      onClickClose();
     }
   };
-  var closePopup = function () {
+
+  var onClickPin = function () {
+    showPopUps();
+  };
+
+  var onClickMainPin = function () {
+    activatePage();
+  };
+
+  var onClickClose = function () {
     if (lastActiveElement) {
       lastActiveElement.classList.remove('map__pin--active');
       popup.classList.add('hidden');
-      document.removeEventListener('keydown', onPopupEscPress);
+      document.removeEventListener('keydown', onPressKey);
     }
   };
-  var onPopupEscPress = function (evt) {
+  var onPressKey = function (evt) {
     if (evt.key === 'Escape') {
-      closePopup();
+      onClickClose();
+    }
+    if (evt.key === 'Enter') {
+      activatePage();
     }
   };
 
+  // Добавляет обработчики на элемент 'Главный пин'
+  mapPinMain.addEventListener('mouseup', onClickMainPin);
+  mapPinMain.addEventListener('keydown', onPressKey);
+
   var updateMap = function () {
-    closePopup();
+    onClickClose();
     state.ads = window.utils.shuffleArr(state.ads);
     clearPins();
     renderAllPins(window.filter.filterAds(state.ads));

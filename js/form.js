@@ -100,6 +100,14 @@ window.form = (function () {
     syncCountGuestsWithRooms();
   };
 
+  var onChangeType = function () {
+    syncTypeFromPrice();
+  };
+
+  var onChangeRoomSelect = function () {
+    syncCountGuestsWithRooms();
+  };
+
   /*
   * Прослушивание событий
   * */
@@ -109,8 +117,9 @@ window.form = (function () {
   checkoutSelect.addEventListener('change', function () {
     syncTimes(checkoutSelect, checkinSelect);
   });
-  typeSelect.addEventListener('change', syncTypeFromPrice);
-  roomsSelect.addEventListener('change', syncCountGuestsWithRooms);
+  typeSelect.addEventListener('change', onChangeType);
+  roomsSelect.addEventListener('change', onChangeRoomSelect);
+
 
   // Выделяет неверно заполненные поля красной рамкой
   form.addEventListener('invalid', function (evt) {
@@ -156,7 +165,12 @@ window.form = (function () {
     }
     priceInput.setCustomValidity(inputError);
   });
-  clearButton.addEventListener('click', resetForm);
+
+  var onClickResetButton = function () {
+    resetForm();
+  };
+
+  clearButton.addEventListener('click', onClickResetButton);
   syncTimes(checkinSelect, checkoutSelect);
   syncTypeFromPrice();
   syncCountGuestsWithRooms();
