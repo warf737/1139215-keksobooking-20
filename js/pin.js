@@ -15,6 +15,6 @@ window.pin = (function () {
   };
 
   return {
-    renderPin: renderPin
+    render: renderPin
   };
 })();

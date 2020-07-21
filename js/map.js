@@ -36,7 +36,7 @@ window.map = (function () {
   var renderAllPins = function (data) {
     var numberAds = data.length > window.data.adCount ? window.data.adCount : data.length;
     for (var j = 0; j < numberAds; j++) {
-      fragment.appendChild(window.pin.renderPin(data[j], j));
+      fragment.appendChild(window.pin.render(data[j], j));
     }
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
@@ -126,7 +126,6 @@ window.map = (function () {
   return {
     activatePage: activatePage,
     clearPins: clearPins,
-    renderPins: renderAllPins,
     updateMap: updateMap
   };
 })();
