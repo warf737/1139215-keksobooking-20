@@ -7,7 +7,7 @@ window.messages = (function () {
   var errorMessageButton = errorMessage.querySelector('.error__button');
 
   var onPressKey = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === window.data.keys.esc.code) {
       onClickClosePopup();
     }
   };

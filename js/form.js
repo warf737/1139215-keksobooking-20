@@ -18,6 +18,7 @@ window.form = (function () {
   var avatarPreview = form.querySelector('.ad-form-header__preview').querySelector('img');
   var photoPreview = form.querySelector('.ad-form__photo');
   var photos = [];
+  var exceptionNumbers = data.exceptionNumbers;
 
   // синхронизирует поля заезда и выезда из номера
   var syncTimes = function (timeItemFrom, timeItemTo) {
@@ -45,19 +46,18 @@ window.form = (function () {
 
   // синхронизирует количество комнат с количеством мест
   var syncCountGuestsWithRooms = function () {
-    var guestCount = (roomsSelect.value === '100') ? '0' : roomsSelect.value;
+    var guestCount = roomsSelect.value === exceptionNumbers.roomsNumber ? exceptionNumbers.guestNumber : roomsSelect.value;
 
     for (var i = 0; i < guestsSelect.options.length; i++) {
-      guestsSelect.options[i].disabled = (guestCount === '0') ?
-        (guestsSelect.options[i].value !== '0') :
-        (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0');
+      guestsSelect.options[i].disabled = (guestCount === exceptionNumbers.guestNumber) ?
+        (guestsSelect.options[i].value !== exceptionNumbers.guestNumber) :
+        (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === exceptionNumbers.guestNumber);
 
       guestsSelect.options[i].selected = !guestsSelect.options[i].disabled;
     }
   };
 
   var generateAddress = function (x, y) {
-    // eslint-disable-next-line
     return 'top:' + y + ', ' + 'left:' + x;
   };
   var regExpCoord = function (coordinate) {

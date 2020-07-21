@@ -2,13 +2,14 @@
 
 window.card = (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var ROOMS_COUNT = {min: 1, max: 100};
 
   var articleRooms = function (numberRooms) {
     var article = ' комната ';
-    if (numberRooms > 1 && numberRooms < 100) {
+    if (numberRooms > ROOMS_COUNT.min && numberRooms < ROOMS_COUNT.max) {
       article = ' комнаты ';
     }
-    if (numberRooms === 100) {
+    if (numberRooms === ROOMS_COUNT.max) {
       article = ' комнат ';
     }
     return article;

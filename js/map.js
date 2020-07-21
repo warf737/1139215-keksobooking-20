@@ -108,10 +108,10 @@ window.map = (function () {
     }
   };
   var onPressKey = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === state.keys.esc.code) {
       onClickClose();
     }
-    if (evt.key === 'Enter') {
+    if (evt.key === state.keys.enter.code) {
       activatePage();
     }
   };
