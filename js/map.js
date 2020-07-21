@@ -92,8 +92,8 @@ window.map = (function () {
     }
   };
 
-  var onClickPin = function () {
-    showPopUps();
+  var onClickPin = function (evt) {
+    showPopUps(evt);
   };
 
   var onClickMainPin = function () {

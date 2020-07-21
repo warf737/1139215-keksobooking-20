@@ -2,6 +2,7 @@
 
 window.data = (function () {
   var map = document.querySelector('.map');
+  var ROOM_TYPES;
   var COORDS_X;
   var COORDS_Y;
   var TIMES;
@@ -17,6 +18,28 @@ window.data = (function () {
   var FILTERS;
   var PRICE_RANGE;
 
+  ROOM_TYPES = {
+    palace: {
+      type: 'Дворец',
+      value: 'palace',
+      minPrice: 10000
+    },
+    flat: {
+      type: 'Квартира',
+      value: 'flat',
+      minPrice: 1000
+    },
+    house: {
+      type: 'Дом',
+      value: 'house',
+      minPrice: 5000
+    },
+    bungalo: {
+      type: 'Бунгало',
+      value: 'bungalo',
+      minPrice: 0
+    }
+  };
   COORDS_X = {
     min: 0,
     max: map.offsetWidth
@@ -91,6 +114,7 @@ window.data = (function () {
   };
 
   return {
+    roomTypes: ROOM_TYPES,
     coordsX: COORDS_X,
     coordsY: COORDS_Y,
     times: TIMES,
