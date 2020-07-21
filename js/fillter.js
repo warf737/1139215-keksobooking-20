@@ -4,9 +4,11 @@ window.filter = (function () {
 
   var filtersContainer = document.querySelector('.map__filters-container');
   var filters = filtersContainer.querySelectorAll('.map__filter');
-  var roomTypes = window.data.roomTypes;
   var filteredAds = [];
   var filterList = window.data.filters;
+  var priceRange = window.data.priceRange;
+  var any = 'any';
+
   var filterByType = function (ads, filterValue) {
     return ads.filter(function (ad) {
       return ad.offer.type === filterValue;
@@ -26,13 +28,9 @@ window.filter = (function () {
   };
 
   var filterByPrice = function (ads, filterValue) {
+    var filteringPrice = priceRange[filterValue.toUpperCase()];
     return ads.filter(function (ad) {
-      var priceInterval = {
-        'low': ad.offer.price < roomTypes.flat.minPrice,
-        'middle': ad.offer.price >= roomTypes.flat.minPrice && ad.offer.price < roomTypes.house.minPrice,
-        'high': ad.offer.price > roomTypes.house.minPrice
-      };
-      return priceInterval[filterValue];
+      return filteringPrice ? ad.offer.price >= filteringPrice.MIN && ad.offer.price <= filteringPrice.MAX : true;
     });
   };
 
@@ -50,9 +48,9 @@ window.filter = (function () {
     filteredAds = ads.slice();
 
     // Формирует массив из фильтров, которые были применены (фильтр был применен,
-    // если его значение отличается от значения 'any') todo
+    // если его значение отличается от значения 'any')
     var appliedFilters = Array.from(filters).filter(function (filter) {
-      return filter.value !== 'any';
+      return filter.value !== any;
     });
 
     // Формирует массив из выбранных характеристик объявления

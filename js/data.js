@@ -11,28 +11,6 @@ window.data = (function () {
     min: 130,
     max: 630
   };
-  var ROOM_TYPES = {
-    palace: {
-      type: 'Дворец',
-      value: 'palace',
-      minPrice: 10000
-    },
-    flat: {
-      type: 'Квартира',
-      value: 'flat',
-      minPrice: 1000
-    },
-    house: {
-      type: 'Дом',
-      value: 'house',
-      minPrice: 5000
-    },
-    bungalo: {
-      type: 'Бунгало',
-      value: 'bungalo',
-      minPrice: 0
-    }
-  };
   var TIMES = [
     '12:00',
     '13:00',
@@ -83,6 +61,20 @@ window.data = (function () {
     filterByGuests: 'housing-guests',
     filterByPrice: 'housing-price'
   };
+  var PRICE_RANGE = {
+    LOW: {
+      MIN: 0,
+      MAX: 10000
+    },
+    MIDDLE: {
+      MIN: 10000,
+      MAX: 50000
+    },
+    HIGH: {
+      MIN: 50000,
+      MAX: Infinity
+    }
+  };
 
   return {
     coordsX: COORDS_X,
@@ -91,13 +83,13 @@ window.data = (function () {
     features: FEATURES,
     adCount: AD_COUNT,
     pinSize: PIN_SIZE,
-    roomTypes: ROOM_TYPES,
     mainPinSize: MAIN_PIN_SIZE,
     ads: ads,
     fileTypes: FILE_TYPES,
     timeout: DEBOUNCE_INTERVAL,
     exceptionNumbers: EXCEPTION_NUMBERS,
     keys: KEY_CODES,
-    filters: FILTERS
+    filters: FILTERS,
+    priceRange: PRICE_RANGE
   };
 })();
