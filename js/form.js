@@ -57,6 +57,9 @@ window.form = (function () {
       } else if (!guestsSelect.options[i].disabled && !guestsSelect.options[i].selected) {
         guestsSelect.options[i].selected = true;
       }
+      guestsSelect.options[i].selected =
+        !!(guestsSelect.options[i].disabled && guestsSelect.options[i].selected);
+
     }
   };
 
