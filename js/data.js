@@ -2,21 +2,35 @@
 
 window.data = (function () {
   var map = document.querySelector('.map');
+  var COORDS_X;
+  var COORDS_Y;
+  var TIMES;
+  var FEATURES;
+  var AD_COUNT;
+  var PIN_SIZE;
+  var MAIN_PIN_SIZE;
+  var FILE_TYPES;
+  var DEBOUNCE_INTERVAL;
+  var EXCEPTION_NUMBERS;
+  var KEY_CODES;
+  var ads = [];
+  var FILTERS;
+  var PRICE_RANGE;
 
-  var COORDS_X = {
+  COORDS_X = {
     min: 0,
     max: map.offsetWidth
   };
-  var COORDS_Y = {
+  COORDS_Y = {
     min: 130,
     max: 630
   };
-  var TIMES = [
+  TIMES = [
     '12:00',
     '13:00',
     '14:00'
   ];
-  var FEATURES = [
+  FEATURES = [
     'wifi',
     'dishwasher',
     'parking',
@@ -24,28 +38,28 @@ window.data = (function () {
     'elevator',
     'conditioner'
   ];
-  var AD_COUNT = 5;
-  var PIN_SIZE = {
+  AD_COUNT = 5;
+  PIN_SIZE = {
     x: 20,
     y: 20
   };
-  var MAIN_PIN_SIZE = {
+  MAIN_PIN_SIZE = {
     x: 65,
     y: 65,
     arrow: 22
   };
-  var FILE_TYPES = [
+  FILE_TYPES = [
     'gif',
     'jpg',
     'jpeg',
     'png'
   ];
-  var DEBOUNCE_INTERVAL = 500;
-  var EXCEPTION_NUMBERS = {
-    roomsNumber: '100', guestNumber: '0'
+  DEBOUNCE_INTERVAL = 500;
+  EXCEPTION_NUMBERS = {
+    roomsNumber: '100',
+    guestNumber: '0'
   };
-  var ads = [];
-  var KEY_CODES = {
+  KEY_CODES = {
     esc: {
       code: 27,
       name: 'Escape'
@@ -55,13 +69,13 @@ window.data = (function () {
       name: 'Enter'
     }
   };
-  var FILTERS = {
+  FILTERS = {
     filterByType: 'housing-type',
     filterByRooms: 'housing-rooms',
     filterByGuests: 'housing-guests',
     filterByPrice: 'housing-price'
   };
-  var PRICE_RANGE = {
+  PRICE_RANGE = {
     LOW: {
       MIN: 0,
       MAX: 10000
