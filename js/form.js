@@ -52,14 +52,7 @@ window.form = (function () {
         (guestsSelect.options[i].value !== '0') :
         (guestsSelect.options[i].value > guestCount || guestsSelect.options[i].value === '0');
 
-      if (guestsSelect.options[i].disabled && guestsSelect.options[i].selected) {
-        guestsSelect.options[i].selected = false;
-      } else if (!guestsSelect.options[i].disabled && !guestsSelect.options[i].selected) {
-        guestsSelect.options[i].selected = true;
-      }
-      guestsSelect.options[i].selected =
-        !!(guestsSelect.options[i].disabled && guestsSelect.options[i].selected);
-
+      guestsSelect.options[i].selected = !guestsSelect.options[i].disabled;
     }
   };
 
