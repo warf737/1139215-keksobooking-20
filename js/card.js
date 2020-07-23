@@ -3,16 +3,22 @@
 window.card = (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var ROOMS_COUNT = {min: 1, max: 100};
+  var GUESTS_COUNT = {min: 1, max: 2};
 
   var generateArticleRooms = function (numberRooms) {
+    console.log(numberRooms)
     var article = ' комната ';
     if (numberRooms > ROOMS_COUNT.min && numberRooms < ROOMS_COUNT.max) {
       article = ' комнаты ';
     }
-    if (numberRooms === ROOMS_COUNT.max) {
+    if (numberRooms === ROOMS_COUNT.max || numberRooms < ROOMS_COUNT.min) {
       article = ' комнат ';
     }
     return article;
+  };
+
+  var generateArticleGuests = function (numberGuests) {
+    return numberGuests !== GUESTS_COUNT.min ? numberGuests + ' гостей' : numberGuests + ' гость';
   };
 
   var renderCard = function (ad) {
@@ -20,11 +26,12 @@ window.card = (function () {
     var featureList = mapElement.querySelector('.popup__features');
     var photos = mapElement.querySelector('.popup__photos');
     var articleRoom = generateArticleRooms(ad.offer.rooms);
+    var articleGuests = generateArticleGuests(ad.offer.guests);
     mapElement.querySelector('.popup__title').textContent = ad.offer.title;
     mapElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     mapElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
     mapElement.querySelector('.popup__type').textContent = window.data.roomTypes[ad.offer.type].type;
-    mapElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + articleRoom + ad.offer.guests;
+    mapElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + articleRoom + articleGuests;
     mapElement.querySelector('.popup__text--time').textContent = 'Заезд ' + ad.offer.checkin + ', выезд ' + ad.offer.checkout;
     mapElement.querySelector('.popup__description').textContent = ad.offer.description;
     mapElement.querySelector('.popup__avatar').src = ad.author.avatar;
