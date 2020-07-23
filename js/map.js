@@ -23,10 +23,6 @@ window.map = (function () {
     // делает все поля формы доступными
     changeActivity();
 
-    /* назначает обработчик showPopups на элемент 'Карта',
-       в котором расположены элементы 'Метка объявления на карте'*/
-    mapPins.addEventListener('click', onClickPin);
-
     // удаляет обработчики с элемента 'Главный пин'
     mapPinMain.removeEventListener('mouseup', onClickMainPin);
     mapPinMain.removeEventListener('keydown', onPressKey);
@@ -39,6 +35,10 @@ window.map = (function () {
     }
     // добавляет созданные пины в DOM
     mapPins.appendChild(fragment);
+
+    /* назначает обработчик showPopups на элемент 'Карта',
+   в котором расположены элементы 'Метка объявления на карте'*/
+    mapPins.addEventListener('click', onClickPin);
   };
 
   var clearPins = function () {
@@ -48,6 +48,7 @@ window.map = (function () {
         mapPins.removeChild(pins[i]);
       }
     }
+
     mapPinMain.removeEventListener('mousedown', window.move.onMainPinMouseDown);
     mapPins.removeEventListener('click', onClickPin);
     mapPinMain.addEventListener('mouseup', onClickMainPin);
@@ -130,7 +131,8 @@ window.map = (function () {
     onClickClose();
     state.ads = window.utils.shuffleArr(state.ads);
     clearPins();
-    renderAllPins(window.filter.onChangeFilter(state.ads));
+    mapPinMain.addEventListener('mousedown', window.move.onMainPinMouseDown);
+    renderAllPins(window.filter.onChangeFilter());
   };
 
   return {

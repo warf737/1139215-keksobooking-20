@@ -46,6 +46,7 @@ window.filter = (function () {
   var filterAds = function () {
     filteredData = window.data.ads.slice(0);
     filteredData = filteredData.filter(filtrationByType).filter(filtrationByPrice).filter(filtrationByRooms).filter(filtrationByGuests).filter(filtrationByFeatures);
+    return filteredData;
   };
 
   filter.addEventListener('change', function () {
@@ -53,17 +54,13 @@ window.filter = (function () {
   });
 
   var resetFilters = function () {
-    filterItems.forEach(function(filterItem) {
+    filterItems.forEach(function (filterItem) {
       filterItem.value = any;
     });
   };
 
-  var onChangeFilter = function () {
-    filterAds();
-  };
-
   return {
-    onChangeFilter: onChangeFilter,
+    onChangeFilter: filterAds,
     resetFilters: resetFilters
   };
 })();
