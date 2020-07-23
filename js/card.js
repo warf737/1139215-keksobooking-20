@@ -20,6 +20,16 @@ window.card = (function () {
     return numberGuests !== GUESTS_COUNT.min ? numberGuests + ' гостей' : numberGuests + ' гость';
   };
 
+  var getType = function (adType) {
+    var type = adType;
+    for (var i = 0; i < window.data.roomTypes.length; i++) {
+      if (window.data.roomTypes[i][type]) {
+        adType = window.data.roomTypes[i][type].type;
+      }
+    }
+    return adType;
+  };
+
   var renderCard = function (ad) {
     var mapElement = cardTemplate.cloneNode(true);
     var featureList = mapElement.querySelector('.popup__features');
@@ -29,7 +39,7 @@ window.card = (function () {
     mapElement.querySelector('.popup__title').textContent = ad.offer.title;
     mapElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     mapElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
-    mapElement.querySelector('.popup__type').textContent = window.data.roomTypes[ad.offer.type].type;
+    mapElement.querySelector('.popup__type').textContent = getType(ad.offer.type);
     mapElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + articleRoom + articleGuests;
     mapElement.querySelector('.popup__text--time').textContent = 'Заезд ' + ad.offer.checkin + ', выезд ' + ad.offer.checkout;
     mapElement.querySelector('.popup__description').textContent = ad.offer.description;

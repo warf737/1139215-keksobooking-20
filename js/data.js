@@ -15,7 +15,6 @@ window.data = (function () {
   var EXCEPTION_NUMBERS;
   var KEY_CODES;
   var ads = [];
-  var FILTERS;
   var PRICE_RANGE;
   var MAIN_PIN_COORDS_DEFAULT = {};
   var MAIN_PIN_COORDS_ACTIVE = {};
@@ -103,12 +102,6 @@ window.data = (function () {
       name: 'Enter'
     }
   };
-  FILTERS = {
-    filterByType: 'housing-type',
-    filterByRooms: 'housing-rooms',
-    filterByGuests: 'housing-guests',
-    filterByPrice: 'housing-price'
-  };
   PRICE_RANGE = {
     LOW: {
       MIN: 0,
@@ -138,7 +131,6 @@ window.data = (function () {
     timeout: DEBOUNCE_INTERVAL,
     exceptionNumbers: EXCEPTION_NUMBERS,
     keys: KEY_CODES,
-    filters: FILTERS,
     priceRange: PRICE_RANGE,
     mapMainPinCoordsDefault: MAIN_PIN_COORDS_DEFAULT,
     mapMainPinCoordsActive: MAIN_PIN_COORDS_ACTIVE

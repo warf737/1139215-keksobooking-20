@@ -130,7 +130,7 @@ window.map = (function () {
     onClickClose();
     state.ads = window.utils.shuffleArr(state.ads);
     clearPins();
-    renderAllPins(window.filter.filterAds(state.ads));
+    renderAllPins(window.filter.onChangeFilter(state.ads));
   };
 
   return {
