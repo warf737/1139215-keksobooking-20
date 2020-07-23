@@ -75,18 +75,28 @@ window.form = (function () {
   };
 
   // устанавливает координаты главного пина в строку адреса при загрузке страницы
-  var setMainPinCoords = function () {
-    if (!data.mapMainPinCoordsDefault.x || data.mapMainPinCoordsDefault.y) {
+  var setMainPin = function () {
+    if (!data.mapMainPinCoordsDefault.x || !data.mapMainPinCoordsDefault.y) {
       data.mapMainPinCoordsDefault = {
         x: parseInt(mapPinMain.style.left, 10) + Math.floor(window.data.mainPinSize.x / 2),
-        y: parseInt(mapPinMain.style.top, 10) + Math.floor(window.data.mainPinSize.y / 2)
+        y: parseInt(mapPinMain.style.top, 10) - window.data.mainPinSize.arrow
       };
+    } else {
+      mapPinMain.style.left = data.mapMainPinCoordsDefault.x.toString(10) - Math.floor(window.data.mainPinSize.x / 2) + 'px';
+      mapPinMain.style.top = data.mapMainPinCoordsDefault.y.toString() - Math.floor(window.data.mainPinSize.x / 2) + 'px';
     }
     setAddress(data.mapMainPinCoordsDefault.x, data.mapMainPinCoordsDefault.y);
   };
 
   var resetForm = function () {
     form.reset();
+    // отключает форму
+    window.map.activatePage();
+    // убирает пины
+    window.map.clearPins();
+    syncCountGuestsWithRooms();
+    syncTypeFromPrice();
+    data.ads = [];
   };
 
   var successHandler = function () {
@@ -94,11 +104,6 @@ window.form = (function () {
     window.messages.createSuccessPopup();
     // сбрасывает значения формы
     resetForm();
-    // отключает форму
-    window.map.activatePage();
-    // убирает пины
-    window.map.clearPins();
-    syncCountGuestsWithRooms();
   };
 
   var onChangeType = function () {
@@ -167,15 +172,18 @@ window.form = (function () {
     priceInput.setCustomValidity(inputError);
   });
 
-  var onClickResetButton = function () {
+  var onClickResetButton = function (evt) {
+    evt.preventDefault();
     resetForm();
   };
 
-  clearButton.addEventListener('click', onClickResetButton);
+  clearButton.addEventListener('click', function (evt) {
+    onClickResetButton(evt);
+  });
   syncTimes(checkinSelect, checkoutSelect);
   syncTypeFromPrice();
   syncCountGuestsWithRooms();
-  setMainPinCoords();
+  setMainPin();
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.actions.save(new FormData(form), successHandler, window.messages.createErrorPopup);

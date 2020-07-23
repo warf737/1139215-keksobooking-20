@@ -14,7 +14,7 @@ window.move = (function () {
       y: evt.clientY
     };
 
-    window.form.setAddress(mapPinMain.offsetTop, mapPinMain.offsetLeft);
+    // window.form.setAddress(mapPinMain.offsetTop, mapPinMain.offsetLeft);
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -51,7 +51,7 @@ window.move = (function () {
     if (currentCoords.x + mainPinSize.x <= data.coordsX.max &&
         currentCoords.x >= data.coordsX.min &&
         currentCoords.y <= data.coordsY.max &&
-        currentCoords.y + mainPinSize.arrow >= data.coordsY.min) {
+        currentCoords.y >= data.coordsY.min) {
       mapPinMain.style.left = currentCoords.x + 'px';
       mapPinMain.style.top = currentCoords.y + 'px';
 

@@ -49,6 +49,7 @@ window.map = (function () {
       }
     }
     mapPinMain.removeEventListener('mousedown', window.move.onMainPinMouseDown);
+    mapPins.removeEventListener('click', onClickPin);
     mapPinMain.addEventListener('mouseup', onClickMainPin);
     mapPinMain.addEventListener('keydown', onPressKey);
     window.form.setAddress(mapPinMinCoordLeft, mapPinMinCoordTop);
@@ -96,13 +97,13 @@ window.map = (function () {
   };
 
   var onClickMainPin = function () {
-    window.load.loadDataPins();
-    state.mapMainPinCoordsActive = {
-      x: state.mapMainPinCoordsDefault.x,
-      y: state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow
-    };
-
-    window.form.setAddress(state.mapMainPinCoordsActive.x, state.mapMainPinCoordsActive.y);
+    if (window.data.ads.length === 0) {
+      window.load.loadDataPins();
+    }
+    mapPinMain.style.top += state.mainPinSize.arrow;
+    window.form.setAddress(state.mapMainPinCoordsDefault.x, state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow);
+    mapPinMain.removeEventListener('mouseup', onClickMainPin);
+    mapPinMain.removeEventListener('keydown', onPressKey);
   };
 
   var onClickClose = function () {

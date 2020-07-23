@@ -16,6 +16,7 @@ window.messages = (function () {
     successMessage.remove();
     errorMessage.remove();
     document.removeEventListener('keydown', onPressKey);
+    document.removeEventListener('click', onClickDocument);
     document.removeEventListener('click', onClickClosePopup);
 
     if (errorMessageButton) {
