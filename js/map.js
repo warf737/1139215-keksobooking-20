@@ -17,7 +17,6 @@ window.map = (function () {
   // делает страницу активной
   var activatePage = function () {
     mapPinMain.addEventListener('mousedown', window.move.onMainPinMouseDown);
-
     renderAllPins(window.data.ads);
     map.classList.toggle('map--faded');
     form.classList.toggle('ad-form--disabled');
@@ -97,7 +96,7 @@ window.map = (function () {
   };
 
   var onClickMainPin = function () {
-    activatePage();
+    window.load.loadDataPins();
   };
 
   var onClickClose = function () {

@@ -4,7 +4,8 @@ window.filter = (function () {
 
   var filtersContainer = document.querySelector('.map__filters-container');
   var filters = filtersContainer.querySelectorAll('.map__filter');
-  var filteredAds = [];
+  var oldFilteredAds = [];
+  var newFilteredAds = [];
   var filterList = window.data.filters;
   var priceRange = window.data.priceRange;
   var any = 'any';
@@ -45,7 +46,8 @@ window.filter = (function () {
   });
 
   var filterAds = function (ads) {
-    filteredAds = ads.slice();
+    oldFilteredAds = ads.slice();
+    newFilteredAds = ads.slice();
 
     // Формирует массив из фильтров, которые были применены (фильтр был применен,
     // если его значение отличается от значения 'any')
@@ -60,22 +62,26 @@ window.filter = (function () {
     appliedFilters.forEach(function (filter) {
       var filterName = filter.name;
       if (filterName === filterList.filterByType) {
-        filteredAds = filterByType(filteredAds, filter.value);
+        oldFilteredAds = filterByType(oldFilteredAds, filter.value);
       } else if (filterName === filterList.filterByRooms) {
-        filteredAds = filterByRooms(filteredAds, filter.value);
+        oldFilteredAds = filterByRooms(oldFilteredAds, filter.value);
       } else if (filterName === filterList.filterByGuests) {
-        filteredAds = filterByGuests(filteredAds, filter.value);
+        oldFilteredAds = filterByGuests(oldFilteredAds, filter.value);
       } else if (filterName === filterList.filterByPrice) {
-        filteredAds = filterByPrice(filteredAds, filter.value);
+        oldFilteredAds = filterByPrice(oldFilteredAds, filter.value);
       }
     });
 
     // Фильтрует объявления по каждой выбранной характеристике
     checkedFeatures.forEach(function (feature) {
-      filteredAds = filterByFeatures(filteredAds, feature.value);
+      oldFilteredAds = filterByFeatures(oldFilteredAds, feature.value);
     });
 
-    return filteredAds;
+
+    console.log('ads: ', ads,
+      'old filtered ads: ', oldFilteredAds,
+      'new filtered ads: ', newFilteredAds);
+    return oldFilteredAds;
   };
 
   return {
