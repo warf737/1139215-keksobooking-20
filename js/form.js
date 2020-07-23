@@ -98,6 +98,7 @@ window.form = (function () {
     syncCountGuestsWithRooms();
     syncTypeFromPrice();
     window.filter.resetFilters();
+    setMainPin();
     data.ads = [];
   };
 
