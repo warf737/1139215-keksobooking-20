@@ -58,7 +58,7 @@ window.form = (function () {
   };
 
   var generateAddress = function (x, y) {
-    return 'top:' + y + ', ' + 'left:' + x;
+    return 'x:' + x + ', ' + 'y:' + y;
   };
   var regExpCoord = function (coordinate) {
     var type = typeof coordinate;
@@ -67,6 +67,7 @@ window.form = (function () {
     }
     return coordinate;
   };
+
   var setAddress = function (coordLeft, coordTop) {
     var x = regExpCoord(coordLeft);
     var y = regExpCoord(coordTop);
@@ -74,11 +75,15 @@ window.form = (function () {
   };
 
   // устанавливает координаты главного пина в строку адреса при загрузке страницы
-  var mapPinMainCoords = {
-    x: mapPinMain.style.left,
-    y: mapPinMain.style.top + Math.floor(window.data.mainPinSize.y / 2) + window.data.mainPinSize.arrow
+  var setMainPinCoords = function () {
+    if (!data.mapMainPinCoordsDefault.x || data.mapMainPinCoordsDefault.y) {
+      data.mapMainPinCoordsDefault = {
+        x: parseInt(mapPinMain.style.left, 10) + Math.floor(window.data.mainPinSize.x / 2),
+        y: parseInt(mapPinMain.style.top, 10) + Math.floor(window.data.mainPinSize.y / 2)
+      };
+    }
+    setAddress(data.mapMainPinCoordsDefault.x, data.mapMainPinCoordsDefault.y);
   };
-  addressInput.value = generateAddress(mapPinMainCoords.x, mapPinMainCoords.y);
 
   var resetForm = function () {
     form.reset();
@@ -170,7 +175,7 @@ window.form = (function () {
   syncTimes(checkinSelect, checkoutSelect);
   syncTypeFromPrice();
   syncCountGuestsWithRooms();
-  setAddress(mapPinMain.style.left, mapPinMain.style.top);
+  setMainPinCoords();
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.actions.save(new FormData(form), successHandler, window.messages.createErrorPopup);

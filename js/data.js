@@ -17,6 +17,8 @@ window.data = (function () {
   var ads = [];
   var FILTERS;
   var PRICE_RANGE;
+  var MAIN_PIN_COORDS_DEFAULT = {};
+  var MAIN_PIN_COORDS_ACTIVE = {};
 
   ROOM_TYPES = {
     palace: {
@@ -67,10 +69,11 @@ window.data = (function () {
     y: 20
   };
   MAIN_PIN_SIZE = {
-    x: 65,
-    y: 65,
+    x: 60,
+    y: 60,
     arrow: 22
   };
+
   FILE_TYPES = [
     'gif',
     'jpg',
@@ -128,6 +131,8 @@ window.data = (function () {
     exceptionNumbers: EXCEPTION_NUMBERS,
     keys: KEY_CODES,
     filters: FILTERS,
-    priceRange: PRICE_RANGE
+    priceRange: PRICE_RANGE,
+    mapMainPinCoordsDefault: MAIN_PIN_COORDS_DEFAULT,
+    mapMainPinCoordsActive: MAIN_PIN_COORDS_ACTIVE
   };
 })();

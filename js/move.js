@@ -14,6 +14,8 @@ window.move = (function () {
       y: evt.clientY
     };
 
+    window.form.setAddress(mapPinMain.offsetTop, mapPinMain.offsetLeft);
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       // смещение от начальных координат точки
@@ -46,17 +48,18 @@ window.move = (function () {
       y: mapPinMain.offsetTop - shift.y
     };
 
-    if (currentCoords.x <= data.coordsX.max - mainPinSize.x / 2 &&
-        currentCoords.x >= data.coordsX.min - mainPinSize.x / 2 &&
+    if (currentCoords.x + mainPinSize.x <= data.coordsX.max &&
+        currentCoords.x >= data.coordsX.min &&
         currentCoords.y <= data.coordsY.max &&
-        currentCoords.y + mainPinSize.y / 2 >= data.coordsY.min) {
+        currentCoords.y + mainPinSize.arrow >= data.coordsY.min) {
       mapPinMain.style.left = currentCoords.x + 'px';
       mapPinMain.style.top = currentCoords.y + 'px';
 
       var newAddressCoords = {
-        x: currentCoords.x,
-        y: currentCoords.y + Math.floor(mainPinSize.y / 2) + mainPinSize.arrow
+        x: currentCoords.x + Math.floor(mainPinSize.x / 2),
+        y: currentCoords.y
       };
+
       window.form.setAddress(newAddressCoords.x, newAddressCoords.y);
     }
   };

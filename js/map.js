@@ -97,6 +97,12 @@ window.map = (function () {
 
   var onClickMainPin = function () {
     window.load.loadDataPins();
+    state.mapMainPinCoordsActive = {
+      x: state.mapMainPinCoordsDefault.x,
+      y: state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow
+    };
+
+    window.form.setAddress(state.mapMainPinCoordsActive.x, state.mapMainPinCoordsActive.y);
   };
 
   var onClickClose = function () {
