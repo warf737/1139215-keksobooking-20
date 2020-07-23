@@ -14,8 +14,6 @@ window.move = (function () {
       y: evt.clientY
     };
 
-    // window.form.setAddress(mapPinMain.offsetTop, mapPinMain.offsetLeft);
-
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       // смещение от начальных координат точки

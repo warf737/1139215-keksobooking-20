@@ -6,7 +6,6 @@ window.card = (function () {
   var GUESTS_COUNT = {min: 1, max: 2};
 
   var generateArticleRooms = function (numberRooms) {
-    console.log(numberRooms)
     var article = ' комната ';
     if (numberRooms > ROOMS_COUNT.min && numberRooms < ROOMS_COUNT.max) {
       article = ' комнаты ';

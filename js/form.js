@@ -26,8 +26,9 @@ window.form = (function () {
   };
   var syncTypeFromPrice = function () {
     for (var i = 0; i < data.roomTypes.length; i++) {
-      if (data.roomTypes[i].value === typeSelect.value) {
-        priceInput.min = data.roomTypes[i].minPrice;
+      if (data.roomTypes[i][typeSelect.value]) {
+        priceInput.placeholder = data.roomTypes[i][typeSelect.value].minPrice;
+        priceInput.min = data.roomTypes[i][typeSelect.value].minPrice;
         break;
       }
     }
@@ -37,8 +38,8 @@ window.form = (function () {
   var getMinPriceForType = function () {
     var minPrice = 0;
     for (var i = 0; i < data.roomTypes.length; i++) {
-      if (data.roomTypes[i].value === typeSelect.value) {
-        minPrice = data.roomTypes[i].minPrice;
+      if (data.roomTypes[i][typeSelect.value]) {
+        minPrice = data.roomTypes[i][typeSelect.value].minPrice;
       }
     }
     return minPrice;
@@ -96,6 +97,7 @@ window.form = (function () {
     window.map.clearPins();
     syncCountGuestsWithRooms();
     syncTypeFromPrice();
+    window.filter.resetFilters();
     data.ads = [];
   };
 

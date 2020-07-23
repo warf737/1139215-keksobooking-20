@@ -20,28 +20,36 @@ window.data = (function () {
   var MAIN_PIN_COORDS_DEFAULT = {};
   var MAIN_PIN_COORDS_ACTIVE = {};
 
-  ROOM_TYPES = {
-    palace: {
-      type: 'Дворец',
-      value: 'palace',
-      minPrice: 10000
+  ROOM_TYPES = [
+    {
+      palace: {
+        type: 'Дворец',
+        value: 'palace',
+        minPrice: 10000
+      },
     },
-    flat: {
-      type: 'Квартира',
-      value: 'flat',
-      minPrice: 1000
+    {
+      flat: {
+        type: 'Квартира',
+        value: 'flat',
+        minPrice: 1000
+      }
     },
-    house: {
-      type: 'Дом',
-      value: 'house',
-      minPrice: 5000
+    {
+      house: {
+        type: 'Дом',
+        value: 'house',
+        minPrice: 5000
+      }
     },
-    bungalo: {
-      type: 'Бунгало',
-      value: 'bungalo',
-      minPrice: 0
+    {
+      bungalo: {
+        type: 'Бунгало',
+        value: 'bungalo',
+        minPrice: 0
+      }
     }
-  };
+  ];
   COORDS_X = {
     min: 0,
     max: map.offsetWidth

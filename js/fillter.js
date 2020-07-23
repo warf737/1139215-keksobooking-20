@@ -77,14 +77,20 @@ window.filter = (function () {
       oldFilteredAds = filterByFeatures(oldFilteredAds, feature.value);
     });
 
-
-    console.log('ads: ', ads,
-      'old filtered ads: ', oldFilteredAds,
-      'new filtered ads: ', newFilteredAds);
+    // console.log('ads: ', ads,
+    //   'old filtered ads: ', oldFilteredAds,
+    //   'new filtered ads: ', newFilteredAds);
     return oldFilteredAds;
   };
 
+  var resetFilters = function () {
+    filters.forEach(function(filter) {
+      filter.value = any;
+    });
+  };
+
   return {
-    filterAds: filterAds
+    filterAds: filterAds,
+    resetFilters: resetFilters
   };
 })();
