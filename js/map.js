@@ -102,7 +102,7 @@ window.map = (function () {
       window.load.loadDataPins();
     }
     // mapPinMain.style.top += state.mainPinSize.arrow;
-    window.form.setAddress(state.mapMainPinCoordsDefault.x, state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow + Math.floor(state.mainPinSize.y / 2));
+    window.form.setAddress(state.mapMainPinCoordsDefault.x, state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow + Math.floor(state.mainPinSize.y / s2));
     mapPinMain.removeEventListener('mouseup', onClickMainPin);
     mapPinMain.removeEventListener('keydown', onPressKey);
   };

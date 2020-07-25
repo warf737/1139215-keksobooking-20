@@ -46,8 +46,8 @@ window.move = (function () {
       y: mapPinMain.offsetTop - shift.y
     };
 
-    if (currentCoords.x + mainPinSize.x <= data.coordsX.max &&
-        currentCoords.x >= data.coordsX.min &&
+    if (currentCoords.x + Math.floor(mainPinSize.x / 2) <= data.coordsX.max &&
+        currentCoords.x + Math.floor(mainPinSize.x / 2) >= data.coordsX.min &&
         currentCoords.y <= data.coordsY.max &&
         currentCoords.y >= data.coordsY.min) {
       mapPinMain.style.left = currentCoords.x + 'px';
