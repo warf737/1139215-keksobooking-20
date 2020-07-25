@@ -7,8 +7,8 @@ window.map = (function () {
   var fragment = document.createDocumentFragment();
   var form = document.querySelector('.ad-form');
   var fieldsets = form.querySelectorAll('fieldset');
-  var mapPinMinCoordLeft = mapPinMain.style.left;
-  var mapPinMinCoordTop = mapPinMain.style.top;
+  var mapPinMainCoordLeft = mapPinMain.style.left;
+  var mapPinMainCoordTop = mapPinMain.style.top;
   var popup;
   var popupClose;
   var lastActiveElement;
@@ -48,14 +48,14 @@ window.map = (function () {
         mapPins.removeChild(pins[i]);
       }
     }
-
+    onClickClose();
     mapPinMain.removeEventListener('mousedown', window.move.onMainPinMouseDown);
     mapPins.removeEventListener('click', onClickPin);
     mapPinMain.addEventListener('mouseup', onClickMainPin);
     mapPinMain.addEventListener('keydown', onPressKey);
-    window.form.setAddress(mapPinMinCoordLeft, mapPinMinCoordTop);
-    mapPinMain.style.left = mapPinMinCoordLeft;
-    mapPinMain.style.top = mapPinMinCoordTop;
+    window.form.setAddress(mapPinMainCoordLeft, mapPinMainCoordTop);
+    mapPinMain.style.left = mapPinMainCoordLeft;
+    mapPinMain.style.top = mapPinMainCoordTop;
   };
 
   // изменяет доступность для редактирования
@@ -101,8 +101,7 @@ window.map = (function () {
     if (window.data.ads.length === 0) {
       window.load.loadDataPins();
     }
-    // mapPinMain.style.top += state.mainPinSize.arrow;
-    window.form.setAddress(state.mapMainPinCoordsDefault.x, state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow + Math.floor(state.mainPinSize.y / s2));
+    window.form.setAddress(state.mapMainPinCoordsDefault.x, state.mapMainPinCoordsDefault.y + state.mainPinSize.arrow + Math.floor(state.mainPinSize.y / 2));
     mapPinMain.removeEventListener('mouseup', onClickMainPin);
     mapPinMain.removeEventListener('keydown', onPressKey);
   };
