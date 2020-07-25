@@ -58,9 +58,6 @@ window.form = (function () {
     }
   };
 
-  var generateAddress = function (x, y) {
-    return 'x:' + x + ', ' + 'y:' + y;
-  };
   var regExpCoord = function (coordinate) {
     var type = typeof coordinate;
     if (type === 'string') {
@@ -72,7 +69,7 @@ window.form = (function () {
   var setAddress = function (coordLeft, coordTop) {
     var x = regExpCoord(coordLeft);
     var y = regExpCoord(coordTop);
-    addressInput.value = generateAddress(x, y);
+    addressInput.value = x + ', ' + y;
   };
 
   // устанавливает координаты главного пина в строку адреса при загрузке страницы
