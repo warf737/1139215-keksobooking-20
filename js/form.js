@@ -72,16 +72,20 @@ window.form = (function () {
     addressInput.value = x + ', ' + y;
   };
 
-  // устанавливает координаты главного пина в строку адреса при загрузке страницы
+  // устанавливает координаты главного пина в строку адреса
   var setMainPin = function () {
+    // при загрузке страницы
     if (!data.mapMainPinCoordsDefault.x || !data.mapMainPinCoordsDefault.y) {
       data.mapMainPinCoordsDefault = {
         x: parseInt(mapPinMain.style.left, 10) + Math.floor(window.data.mainPinSize.x / 2),
-        y: parseInt(mapPinMain.style.top, 10) - window.data.mainPinSize.arrow
+        y: parseInt(mapPinMain.style.top, 10) + Math.floor(window.data.mainPinSize.x / 2)
       };
+      console.log('kek');
+      // при сбросе формы
     } else {
       mapPinMain.style.left = data.mapMainPinCoordsDefault.x.toString(10) - Math.floor(window.data.mainPinSize.x / 2) + 'px';
       mapPinMain.style.top = data.mapMainPinCoordsDefault.y.toString() - Math.floor(window.data.mainPinSize.x / 2) + 'px';
+      console.log('kek2');
     }
     setAddress(data.mapMainPinCoordsDefault.x, data.mapMainPinCoordsDefault.y);
   };

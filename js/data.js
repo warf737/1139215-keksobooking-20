@@ -17,7 +17,6 @@ window.data = (function () {
   var ads = [];
   var PRICE_RANGE;
   var MAIN_PIN_COORDS_DEFAULT = {};
-  var MAIN_PIN_COORDS_ACTIVE = {};
 
   ROOM_TYPES = [
     {
@@ -133,6 +132,5 @@ window.data = (function () {
     keys: KEY_CODES,
     priceRange: PRICE_RANGE,
     mapMainPinCoordsDefault: MAIN_PIN_COORDS_DEFAULT,
-    mapMainPinCoordsActive: MAIN_PIN_COORDS_ACTIVE
   };
 })();
