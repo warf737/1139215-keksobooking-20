@@ -52,11 +52,10 @@ window.filter = (function () {
 
   var filterAds = function () {
     filteredData = window.data.ads.slice(0);
-    for (var i = 0; i <= window.data.adCount; i++) {
-      filteredData.sort(function (left, right) {
-        return getRank(right) - getRank(left);
-      });
-    }
+    // ограничение на количество отрисовываемых пинов происходит в методе renderAllPins компонента map
+    filteredData.sort(function (left, right) {
+      return getRank(right) - getRank(left);
+    });
     return filteredData;
   };
 
