@@ -29,8 +29,8 @@ window.map = (function () {
   };
 
   var renderAllPins = function (data) {
-    var numberAds = data.length > window.data.adCount ? window.data.adCount : data.length;
-    for (var j = 0; j < numberAds; j++) {
+    var a = data.length > window.data.adCount ? window.data.adCount : data.length;
+    for (var j = 0; j < a; j++) {
       fragment.appendChild(window.pin.render(data[j], j));
     }
     // добавляет созданные пины в DOM

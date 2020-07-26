@@ -6,7 +6,6 @@ window.data = (function () {
   var COORDS_X;
   var COORDS_Y;
   var TIMES;
-  var FEATURES;
   var AD_COUNT;
   var PIN_SIZE;
   var MAIN_PIN_SIZE;
@@ -15,7 +14,6 @@ window.data = (function () {
   var EXCEPTION_NUMBERS;
   var KEY_CODES;
   var ads = [];
-  var PRICE_RANGE;
   var MAIN_PIN_COORDS_DEFAULT = {};
 
   ROOM_TYPES = [
@@ -61,14 +59,6 @@ window.data = (function () {
     '13:00',
     '14:00'
   ];
-  FEATURES = [
-    'wifi',
-    'dishwasher',
-    'parking',
-    'washer',
-    'elevator',
-    'conditioner'
-  ];
   AD_COUNT = 5;
   PIN_SIZE = {
     x: 20,
@@ -79,7 +69,6 @@ window.data = (function () {
     y: 60,
     arrow: 22
   };
-
   FILE_TYPES = [
     'gif',
     'jpg',
@@ -101,27 +90,12 @@ window.data = (function () {
       name: 'Enter'
     }
   };
-  PRICE_RANGE = {
-    LOW: {
-      MIN: 0,
-      MAX: 10000
-    },
-    MIDDLE: {
-      MIN: 10000,
-      MAX: 50000
-    },
-    HIGH: {
-      MIN: 50000,
-      MAX: Infinity
-    }
-  };
 
   return {
     roomTypes: ROOM_TYPES,
     coordsX: COORDS_X,
     coordsY: COORDS_Y,
     times: TIMES,
-    features: FEATURES,
     adCount: AD_COUNT,
     pinSize: PIN_SIZE,
     mainPinSize: MAIN_PIN_SIZE,
@@ -130,7 +104,6 @@ window.data = (function () {
     timeout: DEBOUNCE_INTERVAL,
     exceptionNumbers: EXCEPTION_NUMBERS,
     keys: KEY_CODES,
-    priceRange: PRICE_RANGE,
     mapMainPinCoordsDefault: MAIN_PIN_COORDS_DEFAULT,
   };
 })();
