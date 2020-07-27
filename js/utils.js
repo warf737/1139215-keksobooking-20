@@ -30,9 +30,15 @@ window.utils = (function () {
     lastTimeout = window.setTimeout(action, interval);
   };
 
+  var isExistingElement = function (array, value) {
+    return array.find(function (item) {
+      return item === value;
+    });
+  };
   return {
     errorHandler: errorHandler,
     debounce: debounce,
-    shuffleArr: shuffleArr
+    shuffleArr: shuffleArr,
+    isExistingElement: isExistingElement
   };
 })();
