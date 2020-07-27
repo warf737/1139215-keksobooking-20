@@ -4,13 +4,13 @@ window.filter = (function () {
 
   var filter = document.querySelector('.map__filters');
   var filterItems = filter.querySelectorAll('select');
-  var featuresFieldset = filter.querySelector('#housing-features');
   var typeSelect = filter.querySelector('#housing-type');
   var priceSelect = filter.querySelector('#housing-price');
   var roomsSelect = filter.querySelector('#housing-rooms');
   var guestsSelect = filter.querySelector('#housing-guests');
   var selectFilters = filter.querySelectorAll('.map__filter');
-  var inputFilters = filter.querySelectorAll('.map__filter-set input');
+  var featuresFieldset = filter.querySelectorAll('.map__features input');
+  // var inputFilters = filter.querySelectorAll('.map__filter-set input');
   var any = 'any';
   var low = 'low';
   var high = 'high';
@@ -34,13 +34,14 @@ window.filter = (function () {
   var filterAds = function () {
     filteredData = window.data.ads.slice(0);
     var data = [];
-    console.log('filteredData: ', filteredData);
-    for (var i = 0; i <= filteredData.length - 1; i++) {
+    for (var i = 0; i < filteredData.length; i++) {
       if (checkAd(filteredData[i])) {
         data.push(filteredData[i]);
       }
+      if (data.length > window.data.adCount) {
+        break;
+      }
     }
-    console.log('data', data);
     return data;
   };
 
@@ -73,12 +74,11 @@ window.filter = (function () {
       }
     }
 
-    for (var j = 0; j < inputFilters.length; j++) {
-      if (inputFilters[j].checked === true && ad.offer.features.indexOf(inputFilters[j].value) === -1) {
+    for (var j = 0; j < featuresFieldset.length; j++) {
+      if (featuresFieldset[j].checked === true && ad.offer.features.indexOf(featuresFieldset[j].value) === -1) {
         return false;
       }
     }
-
     return true;
   };
 
