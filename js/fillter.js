@@ -14,20 +14,7 @@ window.filter = (function () {
   var high = 'high';
   var middle = 'middle';
   var filteredData = [];
-  var priceRange = {
-    low: {
-      min: 0,
-      max: 10000
-    },
-    middle: {
-      min: 10000,
-      max: 50000
-    },
-    high: {
-      min: 50000,
-      max: Infinity
-    }
-  };
+  var priceRange = window.data.priceRange;
 
   var filterAds = function () {
     filteredData = window.data.ads.slice(0);

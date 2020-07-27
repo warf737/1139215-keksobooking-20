@@ -15,7 +15,7 @@ window.data = (function () {
   var KEY_CODES;
   var ads = [];
   var MAIN_PIN_COORDS_DEFAULT = {};
-
+  var PRICE_RANGE;
   ROOM_TYPES = [
     {
       palace: {
@@ -90,6 +90,20 @@ window.data = (function () {
       name: 'Enter'
     }
   };
+  PRICE_RANGE = {
+    low: {
+      min: 0,
+      max: 10000
+    },
+    middle: {
+      min: 10000,
+      max: 50000
+    },
+    high: {
+      min: 50000,
+      max: Infinity
+    }
+  };
 
   return {
     roomTypes: ROOM_TYPES,
@@ -105,5 +119,6 @@ window.data = (function () {
     exceptionNumbers: EXCEPTION_NUMBERS,
     keys: KEY_CODES,
     mapMainPinCoordsDefault: MAIN_PIN_COORDS_DEFAULT,
+    priceRange: PRICE_RANGE
   };
 })();
