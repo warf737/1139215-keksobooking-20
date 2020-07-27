@@ -5,6 +5,10 @@ window.filter = (function () {
   var filter = document.querySelector('.map__filters');
   var filterItems = filter.querySelectorAll('select');
   var featuresFieldset = filter.querySelector('#housing-features');
+  var typeSelect = filter.querySelector('#housing-type');
+  var priceSelect = filter.querySelector('#housing-price');
+  var roomsSelect = filter.querySelector('#housing-rooms');
+  var guestsSelect = filter.querySelector('#housing-guests');
   var any = 'any';
   var filteredData = [];
 
@@ -60,10 +64,10 @@ window.filter = (function () {
   };
 
   var changeFilters = function (evt) {
-    var filterName = evt.target.name === activeFilters['housing-features'].type ? 'housing-features' : evt.target.name;
+    var filterName = evt.target.name === activeFilters[featuresFieldset.id].type ? featuresFieldset.id : evt.target.name;
 
     // устанавливает фильтры для выпадающих меню
-    if (filterName !== 'housing-features') {
+    if (filterName !== featuresFieldset.id) {
       activeFilters[filterName].active = evt.target.value !== any;
       activeFilters[filterName].value = evt.target.value;
     } else {
@@ -93,30 +97,30 @@ window.filter = (function () {
   var getRank = function (ad) {
     var rank = 0;
 
-    if (checkActivity(activeFilters['housing-type'].value) &&
-      ad.offer.type === activeFilters['housing-type'].value) {
+    if (checkActivity(activeFilters[typeSelect.name].value) &&
+      ad.offer.type === activeFilters[typeSelect.name].value) {
       rank += 1;
     }
 
-    if (checkActivity(activeFilters['housing-rooms'].value) &&
-      ad.offer.rooms === activeFilters['housing-rooms'].value) {
+    if (checkActivity(activeFilters[roomsSelect.name].value) &&
+      ad.offer.rooms === activeFilters[roomsSelect.name].value) {
       rank += 1;
     }
 
-    if (checkActivity(activeFilters['housing-guests'].value) &&
-      ad.offer.guests === activeFilters['housing-guests'].value) {
+    if (checkActivity(activeFilters[guestsSelect.name].value) &&
+      ad.offer.guests === activeFilters[guestsSelect.name].value) {
       rank += 1;
     }
 
-    if (checkActivity(activeFilters['housing-price'].value) &&
-      ad.offer.price >= activeFilters['housing-price'].priceRange[activeFilters['housing-price'].value].min &&
-      ad.offer.price <= activeFilters['housing-price'].priceRange[activeFilters['housing-price'].value].max) {
+    if (checkActivity(activeFilters[priceSelect.name].value) &&
+      ad.offer.price >= activeFilters[priceSelect.name].priceRange[activeFilters[priceSelect.name].value].min &&
+      ad.offer.price <= activeFilters[priceSelect.name].priceRange[activeFilters[priceSelect.name].value].max) {
       rank += 1;
     }
 
-    if (activeFilters['housing-features'].value.length > 0 &&
+    if (activeFilters[featuresFieldset.id].value.length > 0 &&
       ad.offer.features.length > 0
-      && checkIncludes(activeFilters['housing-features'].value, ad.offer.features)) {
+      && checkIncludes(activeFilters[featuresFieldset.id].value, ad.offer.features)) {
       rank += 1;
     }
     return rank;
