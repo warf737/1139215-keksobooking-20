@@ -23,7 +23,7 @@ window.filter = (function () {
       if (checkAd(filteredData[i])) {
         data.push(filteredData[i]);
       }
-      if (data.length > window.data.adCount) {
+      if (data.length >= window.data.adCount) {
         break;
       }
     }
