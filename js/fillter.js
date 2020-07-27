@@ -16,6 +16,20 @@ window.filter = (function () {
   var high = 'high';
   var middle = 'middle';
   var filteredData = [];
+  var priceRange = {
+    low: {
+      min: 0,
+      max: 10000
+    },
+    middle: {
+      min: 10000,
+      max: 50000
+    },
+    high: {
+      min: 50000,
+      max: Infinity
+    }
+  };
 
   var filterAds = function () {
     filteredData = window.data.ads.slice(0);
@@ -31,46 +45,39 @@ window.filter = (function () {
   };
 
   var checkAd = function (ad) {
-    var adOffer = ad.offer;
-    var adFeatures = ad.offer.features;
-    var adPrice = adOffer.price;
 
     for (var i = 0; i < selectFilters.length; i++) {
       if (selectFilters[i] === typeSelect) {
-        // console.log('фильтр типов: ', selectFilters[i]);
-        // console.log('тип в объявлении: ', ad.offer.type);
         if (selectFilters[i].value !== any && ad.offer.type !== selectFilters[i].value) {
           return false;
         }
       }
       if (selectFilters[i] === priceSelect) {
         if (selectFilters[i].value !== any &&
-          (selectFilters[i].value === low && adPrice >= window.utils.PRICE_LOW
-            || selectFilters[i].value === middle && (adPrice <= window.utils.PRICE_LOW || adPrice >= window.utils.PRICE_MIDDLE)
-            || selectFilters[i].value === high && adPrice <= window.utils.PRICE_MIDDLE)
+          (selectFilters[i].value === low && ad.offer.price > priceRange.low.max
+            || selectFilters[i].value === middle && (ad.offer.price < priceRange.middle.min || ad.offer.price > priceRange.middle.max)
+            || selectFilters[i].value === high && ad.offer.price < priceRange.high.min)
         ) {
           return false;
         }
       }
       if (selectFilters[i] === roomsSelect) {
-        console.log('фильтр комнат: ', +selectFilters[i].value);
-        console.log('комнат в объявлении: ', ad.offer.rooms);
-        if (selectFilters[i].value !== any && ad.offer.rooms !== +selectFilters[i].value) {
+        if (selectFilters[i].value !== any && ad.offer.rooms.toString() !== selectFilters[i].value) {
           return false;
         }
       }
       if (selectFilters[i] === guestsSelect) {
-        if (selectFilters[i].value !== any && ad.offer.guests !== selectFilters[i].value) {
+        if (selectFilters[i].value !== any && ad.offer.guests.toString() !== selectFilters[i].value) {
           return false;
         }
       }
     }
 
-    // for (var j = 0; j < inputFilters.length; j++) {
-    //   if (inputFilters[j].checked === true && adFeatures.indexOf(inputFilters[j].value) === -1) {
-    //     return false;
-    //   }
-    // }
+    for (var j = 0; j < inputFilters.length; j++) {
+      if (inputFilters[j].checked === true && ad.offer.features.indexOf(inputFilters[j].value) === -1) {
+        return false;
+      }
+    }
 
     return true;
   };
