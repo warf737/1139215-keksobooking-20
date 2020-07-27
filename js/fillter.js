@@ -3,14 +3,12 @@
 window.filter = (function () {
 
   var filter = document.querySelector('.map__filters');
-  var filterItems = filter.querySelectorAll('select');
   var typeSelect = filter.querySelector('#housing-type');
   var priceSelect = filter.querySelector('#housing-price');
   var roomsSelect = filter.querySelector('#housing-rooms');
   var guestsSelect = filter.querySelector('#housing-guests');
   var selectFilters = filter.querySelectorAll('.map__filter');
   var featuresFieldset = filter.querySelectorAll('.map__features input');
-  // var inputFilters = filter.querySelectorAll('.map__filter-set input');
   var any = 'any';
   var low = 'low';
   var high = 'high';
@@ -87,14 +85,13 @@ window.filter = (function () {
   });
 
   var resetDropDowns = function () {
-    filterItems.forEach(function (filterItem) {
+    selectFilters.forEach(function (filterItem) {
       filterItem.value = any;
     });
   };
 
   var resetFeaturesFilter = function () {
-    var featuresItems = featuresFieldset.querySelectorAll('input:checked');
-    featuresItems.forEach(function (feature) {
+    featuresFieldset.forEach(function (feature) {
       feature.checked = false;
     });
   };
